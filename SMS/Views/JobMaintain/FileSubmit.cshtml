@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+
+    <div style="z-index:999;padding:10px;background-color:white;margin:15px;">
+        <div class="layui-upload-drag" id="test10" style="width:290px">
+            <i class="layui-icon"></i>
+            <p>点击上传，或将文件拖拽到此处</p>
+        </div>
+        <div class="layui-form-mid layui-word-aux" id="filename" style="display:none"></div>
+    </div>
+    <script>
+        console.log('@ViewBag.StudentId');
+        console.log('@ViewBag.TaskId');
+        //文件上传监听事件
+        layui.use('upload', function () {
+            var upload = layui.upload;
+            //拖拽上传
+            upload.render({
+                elem: '#test10'
+              , url: '/JobMaintain/Upload?TaskId=@ViewBag.TaskId&&StudentId=@ViewBag.StudentId&&TeacherId=@ViewBag.TeacherId&&CourseId=@ViewBag.CourseId'
+              , accept: 'file'
+              , multiple: true
+              , number: 1
+              , done: function (data) {
+                  han.closewaiting();
+                  //假设code=0代表上传成功
+                  if(data.Success){
+                      $('#filename').css('display', 'block');
+                  }
+              }
+              , before: function (obj) {
+                  han.waiting();
+                  obj.preview(function (index, file, result) {
+                      $('#filename').empty();
+                        $('#filename').append("上传成功!<br/>文件名为:" + file.name + "<br/>大小为:" + file.size / 1024 + "KB<br/>");
+                    })
+              }
+              , error: function (data) {
+                  han.closewaiting();
+                  $('#filename').empty();
+                  $('#filename').append("文件上传失败，请重试!<br/>");
+                  $('#filename').css('display', 'block');
+              }
+            });
+        });
+        function confirm() {
+            han.closewaiting(1);
+        }
+        function End() {
+            han.reloadtable({
+                id: 'Han_Table2'
+            })
+        }
+    </script>

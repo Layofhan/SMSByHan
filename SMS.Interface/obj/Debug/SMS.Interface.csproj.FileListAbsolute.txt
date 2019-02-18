@@ -1,0 +1,14 @@
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\SMS.Interface.dll.config
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\SMS.Interface.dll
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\SMS.Interface.pdb
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\EntityFramework.dll
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\EntityFramework.SqlServer.dll
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\SMS.Data.dll
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\SMS.Data.pdb
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\EntityFramework.xml
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\EntityFramework.SqlServer.xml
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\zh-Hans\EntityFramework.resources.dll
+D:\Layoomiety\SMS\SMS.Interface\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
+D:\Layoomiety\SMS\SMS.Interface\obj\Debug\SMS.Interface.csprojResolveAssemblyReference.cache
+D:\Layoomiety\SMS\SMS.Interface\obj\Debug\SMS.Interface.dll
+D:\Layoomiety\SMS\SMS.Interface\obj\Debug\SMS.Interface.pdb

@@ -1,0 +1,260 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>发布作业</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+</head>
+<body>
+    <div style="z-index:999;padding:10px;background-color:white;margin:15px;height:650px">
+        <div class="layui-tab layui-tab-brief">
+              <ul class="layui-tab-title">
+                <li class="layui-this">发布作业</li>
+                <li>已发布的作业</li>
+              </ul>
+              <div class="layui-tab-content" style="height: 100px;">
+                  <div class="layui-tab-item layui-show">
+                      <form class="layui-form" action="">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">标题：</label>
+                              <div class="layui-input-block">
+                                  <input type="text" id="Title" lay-verify="isnullorempty" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                              </div>
+                          </div>
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">课程：</label>
+                              <div class="layui-input-block">
+                                  <select id="Course" lay-verify="required" lay-search>
+                                      <option value="">请选择一门课程</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">开始时间：</label>
+                              <div class="layui-input-block">
+                                  <input type="text" id="StartTime" lay-verify="required" placeholder="点击选择开始时间" class="layui-input">
+                              </div>
+                          </div>
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">结束时间：</label>
+                              <div class="layui-input-block">
+                                  <input type="text" id="EndTime" lay-verify="required" placeholder="点击选择结束时间" class="layui-input">
+                              </div>
+                          </div>
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">提交内容：</label>
+                              <div class="layui-input-block">
+                                  <input type="text" id="Content" lay-verify="required" placeholder="请输入所需要提交的内容" class="layui-input">
+                              </div>
+                          </div>
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">要求描述：</label>
+                              <div class="layui-input-block">
+                                  <textarea id="Requirement" placeholder="请输入要求" class="layui-textarea"></textarea>
+                              </div>
+                          </div>
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">备注：</label>
+                              <div class="layui-input-block">
+                                  <textarea id="Remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+                              </div>
+                          </div>
+
+                      </form>
+                      <div style="text-align:center">
+                          <button id="Publish" class="layui-btn layui-btn-radius  layui-btn-normal" style="width:300px;" onclick="sendWork()">发布</button>
+                      </div>
+                  </div>
+                <div class="layui-tab-item">
+                    <div style="height:30px;width:100%;line-height:30px;">
+                        <label style="color:red">任务未开始执行</label> &nbsp
+                        <label style="color:green">任务执行中</label> &nbsp
+                        <label style="color:black">任务已经执行完毕</label>
+                    </div>
+                    <table id="Table_HadWork" lay-filter="test2" ></table>
+                </div>
+              </div>
+        </div> 
+    </div>
+</body>
+    <script>
+        //发布按钮操作
+        function sendWork() {
+            //判断各个输入框是否为空
+            var title = $('#Title').val();
+            var course = $('#Course').val();
+            var starttime = $('#StartTime').val();
+            var endtime = $('#EndTime').val();
+            var requirement = $('#Requirement').val();
+            var content = $('#Content').val();
+            var remark = $('#Remark').val();
+            if (IsNullOrEmpty(title)) {
+                han.message("标题不能为空");
+                return;
+            }
+            if (IsNullOrEmpty(course)) {
+                han.message("课程不能为空");
+                return;
+            }
+            if (IsNullOrEmpty(starttime)) {
+                han.message("开始时间不能为空");
+                return;
+            }
+            if (IsNullOrEmpty(endtime)) {
+                han.message("结束时间不能为空");
+                return;
+            }
+            if (IsNullOrEmpty(requirement)) {
+                han.message("提交内容不能为空");
+                return;
+            }
+            if (IsNullOrEmpty(content)) {
+                han.message("要求描述不能为空");
+                return;
+            }
+            $.ajax({
+                url: '/JobManagement/PublishWork',
+                data: {
+                    CourseId: $('#Course').val(),
+                    StartTime: $('#StartTime').val(),
+                    EndTime: $('#EndTime').val(),
+                    Require: $('#Requirement').val(),
+                    Content: $('#Content').val()
+                },
+                dataType: 'json',
+                beforSend: function () {
+                    console.log("start");
+                    han.waiting();
+                },
+                success: function (data) {
+                    console.log("end" + data);
+                    han.closewaiting();
+                    if (data.Success) {
+                        //清空各个输入框
+                        $('#Title').val('');
+                        
+                        $('#StartTime').val('');
+                        $('#EndTime').val('');
+                        $('#Requirement').val('');
+                        $('#Content').val('');
+                        $('#Remark').val('');
+                        //刷新已发布作业的表格
+                        han.reloadtable({ id: '#Table_HadWork' });
+                        //成功提示
+                        han.message("作业任务发布成功");
+                    }
+                    else {
+                        han.message(data.Message);
+                    }
+                }
+            });
+        }
+        //用于面板的触发事件
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+        han.date({
+            elem: '#StartTime',
+            range: false
+        });
+        han.date({
+            elem: '#EndTime',
+            range: false
+        });
+        $(function () {
+            //自定义表单验证 ，由于验证效果没有达到预期，且无法找到其原因。因此暂时弃用--2019.02.06
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+                //设置自定义验证规则
+                form.verify({
+                    isnullorempty: function (value, item) { //value：表单的值、item：表单的DOM对象
+                        console.log(value);
+                        if (IsNullOrEmpty(value)) {
+                            return '不能为空';
+                        }
+                    }
+                });
+            });
+
+            //加载教师对应的课程
+            $.ajax({
+                url: "/JobManagement/GetCourseInformation",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Success) {
+                        if (data.Data.length == 0) { han.message("The teacher has no lessons！");return; }
+                        var html = '';
+                        for (var i = 0; i < data.Data.length; i++) {
+                            html += "<option value='" + data.Data[i].CourseId + "'>" + data.Data[i].CourseName + "</option>";
+                        }
+                        $('#Course').append(html);
+                        han.formrender();
+                    }
+                    else {
+                        han.message(data.Message);
+                    }
+                }
+            });
+
+            
+
+            //加载已发布作业的课表
+            han.tableClone({
+                url: '/JobManagement/GetPublishedTask',//表格数据来源地
+                elem: '#Table_HadWork',
+                limit:10,
+                page: {
+                    layout: ['prev', 'page', 'next', 'count'] //自定义分页布局
+                },
+                data: [
+                        //{ CourseName: '计算机科学与技术', TeacherName: '嘎吱', FileName: '15219111126 许高涵 综合实验报告.docx', SubmitTime: '2018-11-14 10:39', State: 0 },
+                        //{ CourseName: '计算机科学与技术', TeacherName: '嘎吱', FileName: '15219111126 许高涵 综合实验报告.docx', SubmitTime: '2018-11-14 10:39', State: 1 },
+                        //{ CourseName: '计算机科学与技术', TeacherName: '嘎吱', FileName: '15219111126 许高涵 综合实验报告.docx', SubmitTime: '2018-11-14 10:39', State: 2 }
+                ],
+                cols: [[
+                    {
+                        field: 'CourseName', title: '课程名称', width: '20%', templet: function (d) {
+                            var myDate = new Date();
+                            var time = myDate.toLocaleString();
+                            console.log("------");
+                            console.log(time);
+                            console.log(d.SendTime);
+                            console.log(d.StartTime > time);
+                            console.log(d.EndTime);
+                            console.log(d.EndTime < time);
+                            if (d.StartTime > time) return "<span style='color:red'>" + d.CourseName + "</span>"
+                            if (d.EndTime < time) return "<span style='color:green'>" + d.CourseName + "</span>"
+                        }
+                    }
+                    , { field: 'Require', title: '上交内容', width: '15%' }
+                    , { field: 'Content', title: '内容概述', width: '25%' }
+                    , { field: 'SendTime', title: '发布时间', width: '10%' }
+                    , { field: 'StartTime', title: '开始时间', width: '10%' }
+                    , { field: 'EndTime', title: '结束时间', width: '10%' }
+                    , {
+                        field: 'State', title: '状态', width: '10%', templet: function (d) {
+                            if (d.State == 0) return "<span style='color:red'>未全部提交</span>"
+                            if (d.State == 1) return "<span style='color:green'>已全部提交</span>"
+                        }
+                    }
+                ]]
+            });
+
+            //发布作业按钮事件绑定
+            //$('#Publish').bind('click', function () {
+            //    sendWork();
+            //});
+        });
+    </script>
+</html>

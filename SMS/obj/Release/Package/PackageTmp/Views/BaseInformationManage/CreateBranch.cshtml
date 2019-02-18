@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateBranch</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        function savebranch()
+        {
+            if ($('#BranchId').val().trim() == '') { han.message("ID can not be empty!"); return; }
+            if ($('#BranchName').val().trim() == '') { han.message("BranchName can not be empty!"); return; }
+            if ($('#CollegeName').val().trim() == '') { han.message("CollegeName can not be empty!"); return; }
+            if ($('#BranchId').val().trim().split('').length != 2 || isNaN(Number($('#BranchId').val()))) { han.message("ID must consist of two decimal fractions!"); return; }
+            $.ajax({
+                url: '/BaseInformationManage/InsertBranchToTable',
+                data: { id: $('#BranchId').val().trim(), branchname: $('#BranchName').val().trim(), collegename: $('#CollegeName').val().trim(), remark: $('#BranchRemark').val().trim() },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    if (data.Success) {
+                        han.closewaiting();
+                        $('#BranchId').val('');
+                        $('#BranchName').val('');
+                        $('#CollegeName').val('');
+                        $('#BranchRemark').val('');
+                        han.message("Save Success");
+                    }
+                    else {
+                        han.closewaiting();
+                        han.message(data.Message);
+                    }
+                        
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+<form class="layui-form" action="">
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">分院ID：</label>
+        <div class="layui-input-block">
+          <input type="text" id="BranchId" placeholder="由两位数字组成，不可重复且修改" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">分院名称：</label>
+        <div class="layui-input-block">
+          <input type="text" id="BranchName" placeholder="请输入分院名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">学院名称：</label>
+        <div class="layui-input-block">
+          <input type="text" id="CollegeName" placeholder="请输入学院名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+          <textarea id="BranchRemark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+    <div style="text-align:center">
+        <button class="layui-btn layui-btn-radius layui-btn-normal" style="width:300px;" onclick="savebranch()">保存</button>
+    </div>
+</div>
+</body>
+</html>

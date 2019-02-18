@@ -1,0 +1,100 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StudentEvaluation</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+    <script>
+        var EvaluationIds, StudentIds, CourseIds;
+        $.ajax({
+            type: "post",
+            url: "/EvaluationStatistics/GetStuElectiveInformation",       
+            dataType: 'json',
+            beforeSend: function () {
+                han.waiting();
+            },
+            success: function (result) {
+                han.closewaiting();
+                if (result.Success) {
+                    han.closewaiting();
+                    var count = result.Data.length;
+                    if (count > 0) {
+                        han.table({
+                            counts: count,
+                            id: 'NoticeId',
+                            url: '/EvaluationStatistics/GetStuElectiveInformation',
+                            elem: '#Han_Table',
+                            page:false,
+                            limit: count,
+                            cols: [[
+                              { field: 'CourseName', title: '课程名称', width: '50%', align: 'center' }
+                              , { field: 'TeacherName', title: '教师名称', width: '25%', align: 'center' }
+                              , { field: '', title: '操作一手', toolbar: '#barDemo', width: '25%', align: 'center' }
+                            ]],
+                        });
+                    }
+                    else {
+                        han.message("No Data");
+                    }
+                }
+                else {
+                    han.message(result.Message);
+                }
+            }
+        });
+        //监听table中按钮的事件
+        layui.use('table', function () {
+            var table = layui.table;
+            table.on('tool(test)', function (obj) {
+                var state = 0;
+                EvaluationIds = obj.data.EvaluationId;
+                StudentIds = obj.data.StudentId;
+                CourseIds = obj.data.CourseId;
+                if (obj.event === 'evaluation') {
+                    ceshi = obj.data.CourseId;
+                    han.page({
+                        url: '/EvaluationStatistics/AssessmentDetails',
+                        title: '望慎重考虑 from ' + obj.data.TeacherName,
+                        maxmin:false
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-radius" lay-event="evaluation">评价</a>
+    </script>
+    <style type="text/css">
+                .layui-btn {
+            display: inline-block;
+            height: 28px;
+            line-height: 28px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+    <div> 
+        <table id="Han_Table" lay-filter="test" ></table>
+    </div>
+</div>
+</body>
+</html>

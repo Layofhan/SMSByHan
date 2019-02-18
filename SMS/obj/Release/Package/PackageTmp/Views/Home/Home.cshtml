@@ -1,0 +1,302 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Home</title>
+        <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+        <script src="../Assets/layui.js"></script>
+        <script src="../Scripts/han.core.js"></script>
+        <script src="../Scripts/jquery-1.10.2.min.js"></script>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Home</title>
+        <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+        <script src="../Assets/layui.js"></script>
+        <script src="../Scripts/han.core.js"></script>
+        <script src="../Scripts/jquery-1.10.2.min.js"></script>
+        <script src="../../Scripts/echarts.common.min.js"></script>
+        <style type="text/css">
+            /*兼容IE*/
+.roa{
+    scrollbar-face-color: #20a774;/*移动滑块颜色*/
+    scrollbar-shadow-color: #20a774;/*移动滑块边框颜色*/
+    scrollbar-track-color: #ccc;/*背景颜色*/
+    scrollbar-arrow-color: #ddd;/*箭头颜色*/
+}
+.roa::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #ccc;
+}/* 滚动条的滑轨背景颜色 */
+.roa::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #ccc;
+}
+ 
+.roa::-webkit-scrollbar-thumb
+{
+    background-color: #20a774;
+}/* 滑块颜色 */
+        </style>
+    </head>
+    <body>
+        <div style="z-index:999;padding:10px;background-color:white;margin:15px;width:97%;height:500px;">
+         
+            <div style="width:70%;height:100%;float:left;">
+                <div style="height:200px;width:100%;">
+                    <div class="layui-row layui-col-space10" style="height:100%;">
+                          <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-col-xs12" style="height:100%;border:7px solid white;">
+                            <div style="width:100%;height:50px;font-family:'楷体';color:#009688;font-size:15px;line-height:50px;">当前在线人数</div>
+                            <div id="CurrentNums" style="width:100%;height:150px;font-family:'楷体';line-height:150px;text-align:center;font-size:100px;">
+                                318
+                            </div>
+                          </div>
+                          <div class="layui-col-lg6 layui-col-md6 layui-col-sm6 layui-hide-xs" style="height:100%;border:7px solid white;">
+                            <div style="width:100%;height:50px;font-family:'楷体';color:#009688;font-size:15px;line-height:50px;">待完成任务</div>
+                            <div id="Tasks" style="width:100%;height:150px;font-family:'楷体';line-height:270px;text-align:center;font-size:100px;">
+                                
+                            </div>
+                          </div>                          
+                    </div>
+                </div>
+                <div style="height:300px;width:100%;">
+                    <div style="width:100%;height:50px;font-family:'楷体';color:#009688;font-size:15px;line-height:50px;">10日活跃度</div>
+                    <div id="Liveness" style="width:100%;height:300px;font-family:'楷体';line-height:270px;text-align:center;font-size:100px;">
+                                
+                    </div>
+                </div>
+            </div>
+            <div style="width:30%;height:100%;float:right;">
+                <div style="width:100%;height:50px;font-family:'楷体';color:#FFB800;font-size:15px;line-height:50px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;text-align:center;">
+                    吐槽广场--吐槽是一种年轻态的沟通方式
+                </div>
+                <div id="Roast" class="roa" style="width:100%;height:420px;overflow-x: hidden; overflow-y: auto;">
+
+                </div>
+                <div style="width:100%;height:30px;">
+                    <div style="height:100%;width:70%;float:left;">
+                        <input id="RoastContent" type="text" name="title" placeholder="文明吐槽哟" autocomplete="off" class="layui-input" style="height:100%;width:100%;">  
+                    </div>
+                    <div style="height:100%;width:30%;float:right;">
+                        <button class="layui-btn" style="height:100%;width:100%;" id="RoastAdd">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+        $(function () {
+            //向容器添加内容
+            function AddPtl(str,state) {
+                var loca = str.indexOf("@@");
+                //var lastloca = str.lastIndexOf("%");
+                var username = str.substring(0, loca);
+                var content = str.substring(loca + 1, str.lentgh);
+                //var time = str.substring(lastloca+1, str.lentgh);
+                var ht;
+                if (state == 1) {
+                    ht = $('#LAY-blog-my').html();
+                }
+                else if (state == 2) {
+                    ht = $('#LAY-blog-sel').html();
+                }
+                han.tpl({
+                    data: {
+                        Username: username,
+                        Content: content,
+                    },
+                    view: ht,
+                    id: '#Roast'
+                });
+            }
+            //获取当前时间
+            function getCurrentDate(format) {
+                var now = new Date();
+                var year = now.getFullYear(); //得到年份
+                var month = now.getMonth();//得到月份
+                var date = now.getDate();//得到日期
+                var day = now.getDay();//得到周几
+                var hour = now.getHours();//得到小时
+                var minu = now.getMinutes();//得到分钟
+                var sec = now.getSeconds();//得到秒
+                month = month + 1;
+                if (month < 10) month = "0" + month;
+                if (date < 10) date = "0" + date;
+                if (hour < 10) hour = "0" + hour;
+                if (minu < 10) minu = "0" + minu;
+                if (sec < 10) sec = "0" + sec;
+                var time = "";
+                //精确到天
+                if(format==1){
+                    time = year + "-" + month + "-" + date;
+                }
+                    //精确到分
+                else if(format==2){
+                    time = year + "-" + month + "-" + date+ " " + hour + ":" + minu + ":" + sec;
+                }
+                return time;
+            }
+            var name;
+            //获取发送的用户姓名
+            $.ajax({
+                async:false,
+                type: 'post',
+                url: '/Home/GetUserMessage',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Success) {
+                        name = data.Data.Name;
+                    }
+                    else {
+                        han.message(data.Message);
+                    }
+                }
+            });
+
+            var webSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/api/WSChat?Id=" + name);
+            webSocket.onopen = function () {
+                console.log("opened");
+            }
+            webSocket.onerror = function () {
+                webSocket.send(name + "@@" + $('#RoastContent').val());
+            }
+
+            webSocket.onmessage = function (event) {
+                AddPtl(event.data,2);
+            }
+
+            webSocket.onclose = function () {
+                webSocket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/api/WSChat?Id=" + name);
+            }
+            var isable = true;
+            $('#RoastAdd').bind('click', function () {
+                if (isable)
+                {
+                    var con = $('#RoastContent').val();
+                    if (con == null || con == '') { han.message("吐槽是带有思想的(!=Null)"); return;}
+                    AddPtl(name + "@@" + $('#RoastContent').val(), 1);
+                    //webSocket.send(name + "@@" + $('#RoastContent').val() + "%" + getCurrentDate(2));
+                    webSocket.send(name + "@@" + $('#RoastContent').val());
+                    $('#RoastContent').val('');
+                    isable = false;
+                    window.setTimeout(function () { isable = true; }, 5000);
+                }
+                else {
+                    han.message("(* 吐槽不是喷人 *)");
+                    return;
+                }
+            });      
+        });        
+    </script>
+    <script>
+        $(function () {
+            window.setInterval(function () {
+                $.ajax({
+                    type: 'json',
+                    url: '/Home/GetCurrentNums',
+                    success: function (data) {
+                        if (data != null) {
+                            $('#CurrentNums').text(data);
+                        }
+                        else {
+                            $('#CurrentNums').text(318);
+                        }
+                    }
+                });
+            }, 3000);
+        });
+    </script>
+    <script>
+        var myChart = echarts.init(document.getElementById('Liveness'));
+
+        option = {
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line'
+            }]
+        };
+        myChart.setOption(option);
+    </script>
+    <script>
+        var myChart2 = echarts.init(document.getElementById('Tasks'));
+        option2 = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['课堂作业', '教学评价', '毕业论文', '签到']
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '15',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [
+                        { value: 310, name: '签到' },
+                        { value: 234, name: '毕业论文' },
+                        { value: 135, name: '教学评价' },
+                        { value: 1548, name: '课堂作业' }
+                    ]
+                }
+            ]
+        };
+        myChart2.setOption(option2);
+    </script>
+    <script id="LAY-blog-sel" type="text/html">
+        <div style="width:95%;font-size:13px;font-family:'楷体';height:auto;line-height:13px;border:5px solid white;word-wrap:break-word">
+            <label>{{ d.Username }}:</label>
+            <label style="color:#5FB878;">{{ d.Content }} </label>            
+        </div>    
+    </script>
+    <script id="LAY-blog-my" type="text/html">
+        <div style="width:95%;font-size:13px;font-family:'楷体';height:auto;line-height:25px;border:5px solid white;word-wrap:break-word">
+            <div style="border:1px solid #FFB800">
+                <label>{{ d.Username }}:</label>
+                <label style="color:#5FB878;">{{ d.Content }} </label>           
+            </div> 
+        </div>    
+    </script>
+</html>

@@ -1,0 +1,176 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+    <script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+        $.ajax({
+            url: '/OnlineCourseSelection/GetChoiceCourseInformation?Id=@ViewBag.Id',
+            dataType: 'json',
+            beforeSend: function () {
+                han.waiting();
+            },
+            success: function (data) {
+                han.closewaiting();
+                if (data.Success) {
+                    var count = data.Data.length;
+                    //alert(count);
+                    han.table({
+                        ounts: count,
+                        id: 'CourseId',
+                        url: '/OnlineCourseSelection/GetChoiceCourseInformation?Id=@ViewBag.Id',
+                        elem: '#Han_Table',
+                        page: false,
+                        //toolbar:'<div><button class="layui-btn layui-btn-radius layui-btn-normal" onclick="savecutticulum()">选择此课程</button></div>',
+                        limit: count,
+                        cols: [[
+                           { field: 'Name', title: '课程名称', width: 250, fixed: 'left', unresize: true}
+                          , { field: 'OpenClassTime', title: '开课时间', unresize: true, width: 200, align: 'center' }
+                          , { field: 'Capacity', title: '容量', unresize: true, width: 125, align: 'center' }
+                          , { field: 'Surplus', title: '余量', unresize: true, width: 125, align: 'center' }
+                          , { field: 'Credit', title: '学分', unresize: true, width: 125, align: 'center' }
+                          , { field: 'Indexs', title: '绩点', unresize: true, width: 125, align: 'center' }
+                          , { field: 'LearnTime', title: '周学时', unresize: true, width: 125, align: 'center' }
+                          , { field: 'Location', title: '上课地点', unresize: true, width: 125, align: 'center' }
+                          , { field: 'Campus', title: '校区', unresize: true, width: 125, align: 'center' }
+                          , { field: 'ss', title: '课程选择', toolbar: '#barDemo', unresize: true, width: 150, align: 'center', fixed: 'right' }
+                        ]],
+                    });
+                    gethasselectcourse();
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+
+        //监听行按钮事件
+        layui.use('table', function () {
+            var table = layui.table;
+            table.on('tool(test)', function (obj) {
+                if (obj.event === 'choice') {
+                    $.ajax({
+                        url: '/OnlineCourseSelection/InsertChooseCourseToTable',
+                        data: { Id: '@ViewBag.Id', courseid: obj.data.CourseId, gradeid: obj.data.GradeId },
+                        dataType: 'json',
+                        beforeSend: function () {
+                            han.waiting();
+                        },
+                        success: function (data) {
+                            han.closewaiting();
+                            if(data.Success)
+                            {
+                                gethasselectcourse();
+                                han.message("Choose Success");
+                            }
+                            else {
+                                han.message(data.Message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        //获取学生的已选课信息
+        function gethasselectcourse() {
+            $.ajax({
+                url: '/OnlineCourseSelection/GetChoosedInformation?Id=@ViewBag.Id',
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        var count = data.Data.length;
+                        han.table({
+                            ounts: count,
+                            id: 'CourseId',
+                            url: '/OnlineCourseSelection/GetChoosedInformation?Id=@ViewBag.Id',
+                            elem: '#Han_Table2',
+                            page: false,
+                            //toolbar:'<div><button class="layui-btn layui-btn-radius layui-btn-normal" onclick="savecutticulum()">选择此课程</button></div>',
+                            limit: count,
+                            cols: [[
+                                { field: 'Name', title: '课程名称', unresize: true, width: 250,fixed:'left'}
+                              , { field: 'OpenClassTime', title: '开课时间', unresize: true, width: 200, align: 'center' }
+                              , { field: 'GradeId', title: '年级', unresize: true, width: 150, align: 'center' }
+                              , { field: 'Credit', title: '学分', unresize: true, width: 150, align: 'center' }
+                              , { field: 'Indexs', title: '绩点', unresize: true, width: 150, align: 'center' }
+                              , { field: 'LearnTime', title: '周学时', unresize: true, width: 150, align: 'center' }
+                              , { field: 'Location', title: '上课地点', unresize: true, width: 150, align: 'center' }
+                              , { field: 'Campus', title: '校区', unresize: true, width: 150, align: 'center' }
+                            ]],
+                        });
+                    }
+                    else
+                        han.message(data.Message);
+                }
+            });
+        }
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-radius" lay-event="choice">选择该课程</a>
+    </script>
+
+    <style type="text/css">
+        /*.layui-table-cell {
+            height: 28px;
+            line-height: 28px;
+            padding: 0 15px;
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-sizing: border-box;
+            width:250px;
+        }*/
+        .layui-btn {
+            display: inline-block;
+            height: 28px;
+            line-height: 28px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+      <ul class="layui-tab-title">
+        <li class="layui-this">选课内容</li>
+        <li>已选课程</li>
+      </ul>
+      <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">
+            <table id="Han_Table" lay-filter="test" ></table>
+        </div>
+        <div class="layui-tab-item">
+            <table id="Han_Table2" lay-filter="test2" ></table>
+        </div>
+      </div>
+    </div> 
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+<<<<<<< .mine
+    <_PublishTargetUrl>D:\Layoomiety\发布</_PublishTargetUrl>
+||||||| .r11
+    <_PublishTargetUrl>D:\WebIssue</_PublishTargetUrl>
+=======
+    <_PublishTargetUrl>F:\毕业设计\发布</_PublishTargetUrl>
+>>>>>>> .r16
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Assets/images/bgpic2.jpg">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:14</publishTime>
+||||||| .r11
+      <publishTime>10/08/2018 16:46:03</publishTime>
+=======
+      <publishTime>12/02/2018 22:37:58</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Assets/images/logobgpic.jpg">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:25</publishTime>
+||||||| .r11
+      <publishTime>10/18/2018 15:41:47</publishTime>
+=======
+      <publishTime>12/02/2018 22:37:58</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Assets/layui.all.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:26</publishTime>
+||||||| .r11
+      <publishTime>09/29/2018 14:59:14</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Assets/layui.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:26</publishTime>
+||||||| .r11
+      <publishTime>09/29/2018 14:59:14</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Antlr3.Runtime.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:26</publishTime>
+||||||| .r11
+      <publishTime>02/22/2013 08:43:40</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:50</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Autofac.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:28</publishTime>
+||||||| .r11
+      <publishTime>05/09/2018 11:57:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:51</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Autofac.Integration.Mvc.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:28</publishTime>
+||||||| .r11
+      <publishTime>04/10/2017 15:40:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:51</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/EntityFramework.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:59</publishTime>
+||||||| .r11
+      <publishTime>10/23/2017 13:15:18</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:56</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:59</publishTime>
+||||||| .r11
+      <publishTime>10/23/2017 13:15:20</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:56</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/log4net.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:35:14</publishTime>
+||||||| .r11
+      <publishTime>03/08/2017 19:26:22</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:12</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:10</publishTime>
+||||||| .r11
+      <publishTime>04/03/2015 17:07:22</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:59</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:10</publishTime>
+||||||| .r11
+      <publishTime>04/03/2015 17:07:22</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:59</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:11</publishTime>
+||||||| .r11
+      <publishTime>04/03/2015 17:07:22</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:59</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>06/15/2015 02:06:24</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:03</publishTime>
+>>>>>>> .r16
+    </File>
+<<<<<<< .mine
+    <File Include="bin/Microsoft.Office.Interop.Word.dll">
+      <publishTime>10/10/2007 09:49:08</publishTime>
+    </File>
+||||||| .r11
+=======
+    <File Include="bin/Microsoft.Office.Interop.Word.dll">
+      <publishTime>08/17/2018 22:33:02</publishTime>
+    </File>
+>>>>>>> .r16
+    <File Include="bin/Microsoft.Owin.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:30</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:38</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:06</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:36</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Facebook.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:38</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:06</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Google.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:38</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:06</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:40</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:06</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:47</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:40</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:07</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Twitter.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:47</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:16:42</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:07</publishTime>
+>>>>>>> .r16
+    </File>
+<<<<<<< .mine
+    <File Include="bin/Microsoft.Vbe.Interop.dll">
+      <publishTime>10/10/2007 09:49:08</publishTime>
+    </File>
+||||||| .r11
+=======
+    <File Include="bin/Microsoft.Vbe.Interop.dll">
+      <publishTime>03/03/2010 20:07:10</publishTime>
+    </File>
+>>>>>>> .r16
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:47</publishTime>
+||||||| .r11
+      <publishTime>04/23/2012 15:23:58</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:08</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:54</publishTime>
+||||||| .r11
+      <publishTime>08/03/2014 20:33:56</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:09</publishTime>
+>>>>>>> .r16
+    </File>
+<<<<<<< .mine
+    <File Include="bin/office.dll">
+      <publishTime>10/10/2007 09:49:08</publishTime>
+    </File>
+||||||| .r11
+=======
+    <File Include="bin/office.dll">
+      <publishTime>03/03/2010 20:07:10</publishTime>
+    </File>
+>>>>>>> .r16
+    <File Include="bin/Owin.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:58</publishTime>
+||||||| .r11
+      <publishTime>11/27/2012 13:00:52</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:10</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:44</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:45</publishTime>
+||||||| .r11
+      <publishTime>06/18/2015 20:19:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/SMS.Data.dll">
+<<<<<<< .mine
+      <publishTime>01/22/2019 17:27:08</publishTime>
+||||||| .r11
+      <publishTime>11/16/2018 11:04:14</publishTime>
+=======
+      <publishTime>01/02/2019 21:08:26</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/SMS.Demo.dll">
+<<<<<<< .mine
+      <publishTime>01/22/2019 17:27:11</publishTime>
+||||||| .r11
+      <publishTime>11/16/2018 11:04:19</publishTime>
+=======
+      <publishTime>01/02/2019 21:08:32</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/SMS.dll">
+<<<<<<< .mine
+      <publishTime>01/22/2019 17:27:16</publishTime>
+||||||| .r11
+      <publishTime>11/16/2018 11:04:31</publishTime>
+=======
+      <publishTime>01/02/2019 21:08:41</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/SMS.Entity.dll">
+<<<<<<< .mine
+      <publishTime>01/22/2019 17:27:10</publishTime>
+||||||| .r11
+      <publishTime>11/16/2018 11:04:16</publishTime>
+=======
+      <publishTime>01/02/2019 21:08:29</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/stdole.dll">
+<<<<<<< .mine
+      <publishTime>10/10/2007 09:49:08</publishTime>
+||||||| .r11
+      <publishTime>11/08/2007 02:21:26</publishTime>
+=======
+      <publishTime>03/18/2010 23:21:56</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>11/28/2018 13:00:36</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:30</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>11/28/2018 13:01:00</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>11/28/2018 13:02:56</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:17</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:02:18</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:20</publishTime>
+||||||| .r11
+      <publishTime>02/11/2014 15:26:04</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:01</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:20</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:02:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:01</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:30</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:30</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:30</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/WebGrease.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:35:02</publishTime>
+||||||| .r11
+      <publishTime>09/10/2013 17:28:38</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:10</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/EntityFramework.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:59</publishTime>
+||||||| .r11
+      <publishTime>10/23/2017 13:15:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:57</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/EntityFramework.SqlServer.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:33:59</publishTime>
+||||||| .r11
+      <publishTime>10/23/2017 13:15:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:57</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.AspNet.Identity.Core.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:10</publishTime>
+||||||| .r11
+      <publishTime>04/03/2015 17:09:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:59</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.AspNet.Identity.EntityFramework.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:10</publishTime>
+||||||| .r11
+      <publishTime>04/03/2015 17:09:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:59</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.AspNet.Identity.Owin.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:11</publishTime>
+||||||| .r11
+      <publishTime>04/03/2015 17:09:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:59</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.Host.SystemWeb.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:48</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:48</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.Security.Facebook.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:48</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:06</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.Security.Google.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:50</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:06</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.Security.MicrosoftAccount.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:50</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:07</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.Security.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:46</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:50</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/Microsoft.Owin.Security.Twitter.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:47</publishTime>
+||||||| .r11
+      <publishTime>02/13/2015 13:23:50</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:07</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Helpers.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Mvc.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:17</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:02:22</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Optimization.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:20</publishTime>
+||||||| .r11
+      <publishTime>02/11/2014 15:28:40</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Razor.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:20</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:02:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:01</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Deployment.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Razor.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.resources.dll">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:34:23</publishTime>
+||||||| .r11
+      <publishTime>01/28/2015 04:04:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:39:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Content/bootstrap.css">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:26</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Content/bootstrap.min.css">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:26</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Content/Site.css">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:26</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:43</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:00</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="favicon.ico">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:31:06</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:43</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:15</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.eot">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:31:06</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:15</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.svg">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:31:06</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:15</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.ttf">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:31:06</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:15</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="fonts/glyphicons-halflings-regular.woff">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:31:06</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:15</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Global.asax">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:26</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:43</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:01</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="packages.config">
+<<<<<<< .mine
+      <publishTime>01/22/2019 09:51:21</publishTime>
+||||||| .r11
+      <publishTime>10/17/2018 13:56:51</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:21</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/bootstrap.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/bootstrap.min.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:53</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/echarts.common.min.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>11/01/2018 11:58:41</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:02</publishTime>
+>>>>>>> .r16
+    </File>
+<<<<<<< .mine
+    <File Include="Scripts/han.common.js">
+      <publishTime>12/03/2018 16:30:10</publishTime>
+    </File>
+||||||| .r11
+=======
+    <File Include="Scripts/han.common.js">
+      <publishTime>12/03/2018 22:54:37</publishTime>
+    </File>
+>>>>>>> .r16
+    <File Include="Scripts/han.core.js">
+<<<<<<< .mine
+      <publishTime>01/17/2019 14:34:20</publishTime>
+||||||| .r11
+      <publishTime>11/12/2018 13:21:09</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/han.index.js">
+<<<<<<< .mine
+      <publishTime>01/17/2019 11:50:05</publishTime>
+||||||| .r11
+      <publishTime>11/10/2018 19:46:17</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery-1.10.2.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:55</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:55</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery-1.10.2.min.map">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:55</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/Jquery.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>10/22/2018 16:52:59</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:02</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:03</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:03</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:03</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:03</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/modernizr-2.6.2.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:02</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/respond.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:02</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/respond.min.js">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:30</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:02:02</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:03</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Scripts/_references.js">
+<<<<<<< .mine
+      <publishTime>12/03/2018 16:31:04</publishTime>
+||||||| .r11
+      <publishTime>11/01/2018 11:58:41</publishTime>
+=======
+      <publishTime>12/03/2018 22:54:37</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/ActivityArrangement/ElectiveRegistration.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/31/2018 17:32:22</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/BaseInformationManage/CreateBranch.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:17:54</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/BaseInformationManage/CreateGrade.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:22:45</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/BaseInformationManage/CreateMajor.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:25:52</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/BaseInformationManage/CreateNature.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:29:25</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/DataTest/Index.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/11/2018 19:40:18</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Error/NoAuthority.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/25/2018 14:05:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/EvaluationStatistics/AssessmentDetails.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/31/2018 16:54:18</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/EvaluationStatistics/LectureEvaluation.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/02/2018 11:46:38</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/EvaluationStatistics/ReleaseEvaluation.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/01/2018 09:31:16</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/EvaluationStatistics/StudentEvaluation.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/12/2018 11:49:37</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/EvaluationStatistics/TeachingEvaluationQuery.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/01/2018 18:25:35</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Home/Home.cshtml">
+<<<<<<< .mine
+      <publishTime>01/22/2019 17:10:52</publishTime>
+||||||| .r11
+      <publishTime>11/11/2018 11:43:47</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+<<<<<<< .mine
+      <publishTime>01/18/2019 17:22:50</publishTime>
+||||||| .r11
+      <publishTime>11/10/2018 22:04:52</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Information/StudentTimetable.cshtml">
+      <publishTime>01/18/2019 11:26:55</publishTime>
+    </File>
+    <File Include="Views/InformationMaintain/BaseInformation.cshtml">
+      <publishTime>01/18/2019 15:07:30</publishTime>
+    </File>
+    <File Include="Views/InformationMaintain/SecuritySetting.cshtml">
+      <publishTime>01/18/2019 15:09:44</publishTime>
+    </File>
+    <File Include="Views/JobMaintain/FileSubmit.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/12/2018 14:13:56</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/JobMaintain/Index.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>11/12/2018 14:20:02</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+<<<<<<< .mine
+    <File Include="Views/JobManagement/WorkAssignment.cshtml">
+      <publishTime>12/04/2018 22:48:06</publishTime>
+    </File>
+    <File Include="Views/JobManagement/WorkPublish.cshtml">
+      <publishTime>12/03/2018 18:37:43</publishTime>
+    </File>
+||||||| .r11
+=======
+    <File Include="Views/JobManagement/WorkAssignment.cshtml">
+      <publishTime>12/04/2018 22:54:59</publishTime>
+    </File>
+    <File Include="Views/JobManagement/WorkPublish.cshtml">
+      <publishTime>12/03/2018 22:54:37</publishTime>
+    </File>
+>>>>>>> .r16
+    <File Include="Views/Login/Index.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:32</publishTime>
+||||||| .r11
+      <publishTime>10/22/2018 16:55:33</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:04</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Notification/HasSendNoticeDetailedInterface.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/23/2018 16:56:34</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Notification/HasSendNoticeInterface.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/23/2018 17:30:12</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Notification/Index.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/31/2018 11:35:50</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Notification/NoticeDetailedInterface.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/22/2018 21:36:26</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Notification/SendNoticeMessage.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:36:32</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/OnlineCourseSelection/Index.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>11/01/2018 09:32:27</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/ResourceManagement/ArrangeCourse.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:30:46</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/ResourceManagement/ArrangeCurriculum.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:34:17</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/ResourceManagement/CreateCourse.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>10/29/2018 19:35:05</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>09/19/2018 17:07:51</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/Web.config">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>08/24/2018 09:01:43</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+<<<<<<< .mine
+      <publishTime>12/02/2018 22:30:33</publishTime>
+||||||| .r11
+      <publishTime>09/19/2018 17:08:06</publishTime>
+=======
+      <publishTime>12/02/2018 22:38:05</publishTime>
+>>>>>>> .r16
+    </File>
+    <File Include="Web.config">
+<<<<<<< .mine
+      <publishTime>01/22/2019 17:27:18</publishTime>
+||||||| .r11
+      <publishTime>11/16/2018 11:04:33</publishTime>
+=======
+      <publishTime>01/02/2019 21:08:46</publishTime>
+>>>>>>> .r16
+    </File>
+  </ItemGroup>
+</Project>

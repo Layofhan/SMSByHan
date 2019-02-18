@@ -1,0 +1,247 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReleaseEvaluation</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+    <script>
+        
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+        //加载已经发布的活动
+        loadactive();
+        //加载年级信息
+        $.ajax({
+            url: '/ResourceManagement/GetGradeInformation',
+            dataType: 'json',
+            beforeSend: function () {
+                han.waiting();
+            },
+            success: function (data) {
+                han.closewaiting();
+                if (data.Success) {
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#EvaluationGrade').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                    }
+                    han.formrender();
+                    
+                }
+                else {
+                    han.message("No Grade Data");
+                }
+            }
+        });
+        //加载已经发布的评价活动
+        function loadactive() {
+            $.ajax({
+                url: '/EvaluationStatistics/GetSendElective',
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        var count = data.Data.length;
+                        //alert(count);
+                        han.table({
+                            ounts: count,
+                            url: '/EvaluationStatistics/GetSendElective',
+                            elem: '#Han_Table',
+                            page: false,
+                            //toolbar:'<div><button class="layui-btn layui-btn-radius layui-btn-normal" onclick="savecutticulum()">选择此课程</button></div>',
+                            limit: count,
+                            cols: [[
+                               { field: 'Id', title: '评价活动ID', width: '20%', unresize: true, align: 'center' }
+                              , { field: 'Title', title: '活动标题', unresize: true, width: '20%', align: 'center' }
+                              , { field: 'Time', title: '时间', unresize: true, width: '20%', align: 'center' }
+                              , {
+                                  field: 'State', title: '状态', unresize: true, width: '20%', align: 'center', templet: function (d) {
+                                      if (d.State == 0) return '未启用'
+                                      else return '已启用'
+                                  }
+                              }
+                              , { field: 'ss', title: '编辑', toolbar: '#barDemo', unresize: true, width: '19.8%', align: 'center' }
+                            ]],
+                        });
+                    }
+                    else {
+                        han.message(data.Message);
+                    }
+                }
+            });
+        }
+        //监听table中按钮的事件
+        layui.use('table', function () {
+            var table = layui.table;
+            table.on('tool(test)', function (obj) {
+                var state = 0;
+                if (obj.event === 'open') {
+                    state = 1;
+                }
+                if (obj.event === 'close') {
+                    state = 0;
+                }
+                $.ajax({
+                    url: '/EvaluationStatistics/ChangeElectiveState',
+                    data: { s: state, id: obj.data.Id },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        han.waiting();
+                    },
+                    success: function (data) {
+                        han.closewaiting();
+                        han.message(data.Message);
+                        table.reload('Han_Table', { url: '/EvaluationStatistics/GetSendElective' });
+                    }
+                });
+            });
+        });
+        //保存按钮触发的事件
+        function saveEvaluation()
+        {
+            
+            if ($('#EvaluationId').val() == '') { han.message("Id can not be empty!"); return; }
+            if ($('#EvaluationTitle').val() == '') { han.message("Title can not be empty!"); return; }
+            if ($('#EvaluationGrade').val() == '') { han.message("Grade can not be empty!"); return; }
+            var ret = /^[\d]{4}$/;
+            if (!ret.test($('#EvaluationId').val())) { han.message("An ID must consist of two letters plus four digits"); return; }
+            var che = 1;
+            if (!$('#EvaluationCheck').is(':checked')) che = 0;
+            $.ajax({
+                url: '/EvaluationStatistics/InsertInformationToTable',
+                data: { 
+                    Id: $('#EvaluationId').val(),
+                    Title: $('#EvaluationTitle').val(),
+                    Remark: $('#EvaluationRemark').val(),
+                    State: che,
+                    GradeId: $('#EvaluationGrade').val(),
+                    TimeType: $('#EvaluationTimeType').val(),
+                    FunctionType: $('#EvaluationType').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        han.message("Save Success");
+                        $('#EvaluationId').val('');
+                        $('#EvaluationTitle').val('');
+                        $('#EvaluationRemark').val('');
+                        loadactive();
+                    }
+                    else {
+                        han.message(data.Message);
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-radius" lay-event="open">开启</a>
+        <a class="layui-btn layui-btn-radius" lay-event="close">关闭</a>
+    </script>
+        <style type="text/css">
+        .layui-btn {
+            display: inline-block;
+            height: 28px;
+            line-height: 32px;
+            padding: 0 18px;
+            background-color: #009688;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="z-index:999;padding:10px;background-color:white;margin:15px;height:520px;">
+      <ul class="layui-tab-title">
+        <li class="layui-this">发布评价活动</li>
+        <li>已发布评价</li>
+      </ul>
+      <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">
+            <form class="layui-form" action="">
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">活动编号:</label>
+                    <div class="layui-input-block">
+                      <input type="text" id="EvaluationId" placeholder="由4位数字组成，不可重复且修改" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">标题:</label>
+                    <div class="layui-input-block">
+                      <input type="text" id="EvaluationTitle" placeholder="请输入评价标题" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">类型:</label>
+                    <div class="layui-input-block">
+                        <select id="EvaluationType" lay-verify="" lay-search>
+                            <option value="0">教学评价</option>
+                            <option value="1">毕业论文评价</option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-block">
+                        <select id="EvaluationTimeType" lay-verify="" lay-search>
+                            <option value="0">期中评教</option>
+                            <option value="1">期末评教</option>
+                        </select> 
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">学年:</label>
+                    <div class="layui-input-block">
+                        <select id="EvaluationGrade" lay-verify="" lay-search>
+                        </select> 
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">是否开启:</label>
+                    <div class="layui-input-block">
+                        <input id="EvaluationCheck" type="checkbox" lay-skin="switch" lay-text="开启|关闭" checked />
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                      <textarea id="EvaluationRemark" placeholder="请输入备注" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+            </form>
+            <div style="text-align:center">
+                    <button class="layui-btn layui-btn-radius  layui-btn-normal" style="width:300px;" onclick="saveEvaluation()">保存</button>
+            </div>
+        </div>
+        <div class="layui-tab-item">
+            <table id="Han_Table" lay-filter="test" ></table>
+        </div>
+      </div>
+    </div> 
+</body>
+</html>

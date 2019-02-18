@@ -1,0 +1,92 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SendNoticeMessage</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+        $.ajax({
+            url: '/Notification/GetCourseOfTeacher',
+            dataType: 'json',
+            beforeSend: function () {
+                han.waiting();
+            },
+            success: function (data) {
+                han.closewaiting();
+                if (data.Success) {
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#NoticeCourse').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                    }
+                    han.formrender();
+                }
+                else
+                    han.message(data.Message);
+            }
+        });
+        function sendnotice() {
+            if ($('#NoticeTitle').val().trim() == '') { han.message("Title can not be empty!"); return;}
+            if ($('#NoticeContent').val() == '') { han.message("Content can not be empty!"); return; }
+            if ($('#NoticeCourse').val() == '') { han.message("Course can not be empty!"); return; }
+            $.ajax({
+                url: '/Notification/SendNotice',
+                data: { title: $('#NoticeTitle').val().trim(), content: $('#NoticeContent').val(), courseid: $('#NoticeCourse').val() },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        han.message("Send Success");
+                        $('#NoticeTitle').val('');
+                        $('#NoticeContent').val('');
+                    }
+                    else
+                        han.message(data.Message);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+<form class="layui-form" action="">
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">消息标题：</label>
+        <div class="layui-input-block">
+          <input type="text" id="NoticeTitle"  placeholder="请输入消息标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">消息内容：</label>
+        <div class="layui-input-block">
+          <textarea id="NoticeContent" placeholder="请输入消息内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">班级：</label>
+        <div class="layui-input-block">
+            <select id="NoticeCourse" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+</form>
+    <div style="text-align:center">
+        <button id="sendnotice" class="layui-btn layui-btn-radius layui-btn-normal" style="width:300px;" onclick="sendnotice()">保存</button>
+    </div>
+</div>
+</body>
+</html>

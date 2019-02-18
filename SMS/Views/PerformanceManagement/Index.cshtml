@@ -1,0 +1,302 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+</head>
+<body>
+    <div style="z-index:999;padding:10px;background-color:white;margin:15px;height:650px">
+        <div class="layui-tab layui-tab-brief">
+              <ul class="layui-tab-title">
+                <li class="layui-this">成绩录入</li>
+                <li>成绩统计</li>
+              </ul>
+              <div class="layui-tab-content" style="height: 100px;">
+                <div class="layui-tab-item layui-show">
+                    
+                    <div style="width:100%;height:50px;line-height:50px;">
+                        <form class="layui-form" action="">
+                            <div style="float:left;">
+                                <div style="width:200px;float:left;height:50px">
+                                <div class="layui-form-item" style="margin-left:-50px"> 
+                             <label class="layui-form-label">课程：</label>
+                             <div class="layui-input-block" style="width:200px;">
+                                    <select id="Course" lay-verify="required" lay-filter="course" lay-search>
+                                        <option value="">请选择一门课程</option>
+                                    </select>     
+                              </div>
+                            </div>
+                            </div>
+                                <div style="width:200px;height:50px;float:right;">
+                                <div class="layui-form-item" style="margin-left:50px"> 
+                            <label class="layui-form-label">班级：</label>
+                             <div class="layui-input-block" style="width:200px">
+                                 <select id="Class" lay-verify="required" lay-filter="class" lay-search>
+                                     
+                                 </select>     
+                              </div>
+                            </div>
+                            </div>   
+                            </div>
+                            <!--<div style="float:right;">
+                                <div style="float:left;">
+                                <label class="layui-form-label">学分：</label> 
+                                    <input type="text" id="Creditx" placeholder="请输入学分" autocomplete="off" class="layui-input" style="width:200px;">
+                                </div>
+                                <div style="float:right">
+                                    <label class="layui-form-label">绩点：</label>
+                                    <input type="text" id="Indexsx" placeholder="请输入绩点" autocomplete="off" class="layui-input" style="width:200px;">
+                                </div>                               
+                            </div>-->
+                         </form>
+                    </div>
+                    <div>
+                            <table id="Table_WorkCheck" lay-filter="test"></table>
+                        </div>
+                    </div>
+                <div class="layui-tab-item">
+                    hello two
+                </div>
+              </div>
+        </div> 
+    </div>
+</body>
+<script>
+    
+    layui.use('form', function () {
+        var form = layui.form;
+        form.render();
+    });
+    
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    $(function () {
+        
+        var cour;
+        var cla;
+    //监听表格事件事件
+    layui.use('table', function () {
+        var table = layui.table;
+        //监听行编辑事件
+        table.on('edit(test)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+            //console.log(obj.value); //得到修改后的值
+            //console.log(obj.field); //当前编辑的字段名
+            //console.log(obj.data); //所在行的所有相关数据  
+            //console.log($('*[data-field="Gpa"]'));
+            //修改学分和成绩的输入框内容
+            //提交行修改--修改成绩
+            //$('#Creditx').val('3');
+            //$('#Indexsx').val(obj.data.Achievement / 100 * 4.5);
+            switch (obj.field) {
+                case 'Achievement': UpdateAchievement(obj);
+                    break;
+                case 'Credit': UpdateCredit(obj);
+                    break;
+                case 'Indexs': UpdateIndex(obj);
+                    break;
+                case 'MakeupGrade': UpdateMakeupGrade(obj);
+                    break;
+                case 'Remark': UpdateRemark(obj);
+                    break;
+            }
+        });
+    });
+    //修改成绩
+    function UpdateAchievement(obj) {
+        $.ajax({
+            url: '/PerformanceManagement/UpdateScore',
+            data: {
+                Grade: obj.data.Achievement,
+                Indexs: obj.data.Achievement / 100 * 4.5,
+                Creditx: 3,
+                CourseId: cour,
+                StudentId: obj.data.StudentId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.Success) {
+                    han.message("Failed to modify the score, refresh after retry");
+                }
+                else {
+                    han.reloadtable({
+                        id: 'Table_WorkCheck'
+                    });
+                }
+            }
+        });
+    }
+    //修改学分
+    function UpdateCredit(obj) {
+        $.ajax({
+            url: '/PerformanceManagement/UpdateCredit',
+            data: {
+                Credit: obj.value,
+                CourseId: cour,
+                StudentId: obj.data.StudentId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.Success) {
+                    han.message("Failed to modify the credit, refresh after retry");
+                }
+            }
+        });
+    }
+    //修改绩点
+    function UpdateIndex(obj) {
+        $.ajax({
+            url: '/PerformanceManagement/UpdateIndexs',
+            data: {
+                Indexs: obj.value,
+                CourseId: cour,
+                StudentId: obj.data.StudentId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.Success) {
+                    han.message("Failed to modify the index, refresh after retry");
+                }
+            }
+        });
+    }
+    //修改补考成绩
+    function UpdateMakeupGrade(obj) {
+        $.ajax({
+            url: '/PerformanceManagement/UpdateMakeupGrade',
+            data: {
+                MakeupGrade: obj.value,
+                CourseId: cour,
+                StudentId: obj.data.StudentId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.Success) {
+                    han.message("Failed to modify the makeupgrade, refresh after retry");
+                }
+            }
+        });
+    }
+    //修改备注
+    function UpdateRemark(obj) {
+        $.ajax({
+            url: '/PerformanceManagement/UpdateRemark',
+            data: {
+                Remark: obj.value,
+                CourseId: cour,
+                StudentId: obj.data.StudentId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (!data.Success) {
+                    han.message("Failed to modify the credit, refresh after retry");
+                }
+            }
+        });
+    }
+    //监听下拉框的选择
+    layui.use('form', function () {
+        var form = layui.form;
+        //课程下拉框
+        form.on('select(course)', function (data) {
+            cour = data.value;
+            if (data.value != null) {
+                $.ajax({
+                    url: '/JobManagement/GetClassInformation',
+                    data: { CourseId: data.value},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Success) {
+                            if (data.Data == null) {
+                                han.message("No Data!");
+                                return;
+                            }
+                            $('#Class').empty();
+                            $('#Class').append("<option value=''>请选择班级</option>");
+                            for (var i = 0; i < data.Data.length; i++) {
+                                $('#Class').append("<option value='" + data.Data[i].Class + "'>" + data.Data[i].Class + "</option>");
+                            }
+                            han.formrender();
+                        }
+                        else {
+                            han.message(data.Message);
+                        }
+                    }
+                });
+            }
+        });  
+        //班级下拉框
+        form.on('select(class)', function (data) {
+            cla = data.value;
+            if (data.value != null) {
+                LoadTabel();
+            }
+        });
+        });
+
+    function LoadTabel() {
+            han.tableClone({
+                url: '/PerformanceManagement/GetStudentGrade?CourseId=' + cour + '&&ClassId=' + cla,
+                elem: '#Table_WorkCheck',
+                counts: 1,
+                page: {
+                    layout: ['prev', 'page', 'next', 'count'] //自定义分页布局
+                    , groups: 10
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                    , count: 1
+                },
+                toolbar:true,
+                cols: [[
+                    { field: 'StudentName', title: '学生姓名', width: '15%' }
+                    , { field: 'StudentId', title: '学生ID', width:'15%' }
+                    , { field: 'Achievement', title: '成绩', width: '12%', edit: 'text' }
+                    , { field: 'Credit', title: '学分', width: '12%', edit: 'text' }
+                    , { field: 'Indexs', title: '绩点', width: '12%', edit: 'text' }
+                    , { field: 'MakeupGrade', title: '补考成绩', width: '12%', edit: 'text' }
+                    , { field: 'Remark', title: '备注', width: '22%', align: 'center', edit: 'text' }
+                ]]
+            });
+        }
+    });
+</script>
+<script>
+    $(function () {
+        //添加课程内容
+        $.ajax({
+            url: '/JobManagement/GetCourseInformation',
+            dataType: 'json',
+            success: function (data) {
+                if (data.Success) {
+                    if (data.Data == null) {
+                        han.message("No Data!");
+                        return;
+                    }
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#Course').append("<option value='" + data.Data[i].CourseId + "'>" + data.Data[i].CourseName + "</option>");
+                    }
+                    han.formrender();
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+    });
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-radius" lay-event="choice">在线预览</a>
+</script>
+</html>

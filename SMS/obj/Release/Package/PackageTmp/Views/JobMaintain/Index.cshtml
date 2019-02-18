@@ -1,0 +1,104 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>学生作业管理界面</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <style type="text/css">
+        .layui-btn{
+            height:28px;
+            line-height:30px;
+        }
+    </style>
+</head>
+<body>
+    <div style="z-index:999;padding:10px;background-color:white;margin:15px;height:650px">
+        <div class="layui-tab layui-tab-brief">
+              <ul class="layui-tab-title">
+                <li class="layui-this">待交作业</li>
+                <li>已交作业</li>
+              </ul>
+              <div class="layui-tab-content" style="height: 100px;">
+                <div class="layui-tab-item layui-show">
+                    <table id="Han_Table" lay-filter="test" ></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table id="Han_Table2" lay-filter="test2" ></table>
+                </div>
+              </div>
+        </div> 
+    </div>
+</body>
+<script>
+        layui.use('element', function () {
+            var element = layui.element;
+        });
+        //加载需要提交作业的表格
+        han.table({
+            page: false,
+            data: [{ CourseName: '计算机科学与技术', TeacherName: '嘎吱', SendContext: '综合实验报告', SendTime: '2018-11-12 10:39', EndTime: '2018-11-19 10:39', }],
+            cols: [[
+                  { field: 'CourseName', title: '课程名称', width: '20%' }
+                , { field: 'TeacherName', title: '教师名称', width: '10%' }
+                , { field: 'SendContext', title: '上交内容', width: '29.7%' }
+                , { field: 'SendTime', title: '发布时间', width: '15%' }
+                , { field: 'EndTime', title: '结束时间', width: '15%' }
+                , { field: '', title: '作业上交', toolbar: '#barDemo', unresize: true, width: '10%', align: 'center', fixed: 'right' }
+            ]]
+        });
+        //加载已交作业的表格
+        han.table({
+            elem: '#Han_Table2',
+            counts: 30,
+            page: {
+                layout: ['prev', 'page', 'next', 'count'] //自定义分页布局
+              , groups: 10
+              , first: false //不显示首页
+              , last: false //不显示尾页
+              , count:30
+            },
+            limit: 20,
+            data: [
+                { CourseName: '计算机科学与技术', TeacherName: '嘎吱', FileName: '15219111126 许高涵 综合实验报告.docx', SubmitTime: '2018-11-14 10:39', State: 0 },
+                { CourseName: '计算机科学与技术', TeacherName: '嘎吱', FileName: '15219111126 许高涵 综合实验报告.docx', SubmitTime: '2018-11-14 10:39', State: 1 },
+                { CourseName: '计算机科学与技术', TeacherName: '嘎吱', FileName: '15219111126 许高涵 综合实验报告.docx', SubmitTime: '2018-11-14 10:39', State: 2 }
+            ],
+            cols: [[
+                  { field: 'CourseName', title: '课程名称', width: '30%' }
+                , { field: 'TeacherName', title: '教师名称', width: '10%' }
+                , { field: 'FileName', title: '文档名称', width: '30%' }
+                , { field: 'SubmitTime', title: '上交时间', width: '20%' }
+                , { field: 'State', title: '状态', width: '9.6%' ,templet: function(d){
+                    if (d.State == 0) return "<span style='color:red'>逾期未提交</span>"
+                    if (d.State == 1) return '已提交'
+                    if (d.State == 2) return "<span style='color:green'>已批改</span>"
+                }}
+            ]]
+        });
+        //监听行按钮事件
+        layui.use('table', function () {
+            var table = layui.table;
+            table.on('tool(test)', function (obj) {
+                if (obj.event === 'choice') {
+                    han.page({
+                        url: '/JobMaintain/FileSubmit',
+                        title: '请上传文件',
+                        maxmin:false
+                    })
+                }
+            });
+        });
+</script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-radius" lay-event="choice">上传文件</a>
+    </script>
+</html>

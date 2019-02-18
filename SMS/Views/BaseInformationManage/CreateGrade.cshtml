@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateGrade</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+    <script>  
+        function savegrade()
+        {
+            if ($('#GradeId').val().trim() == '') { han.message("ID can not be empty!"); return; }
+            //var ret = /^[\d]{4}-[\d]{4}$/;
+            var ret = /^[\d]{4}$/;
+            if (!ret.test($('#GradeId').val().trim())) { han.message("ID does not conform to the format."); return; }
+            $.ajax({
+                url: '/BaseInformationManage/InsertGradeToTable',
+                data: { id: $('#GradeId').val().trim(), remarket: $('#GradeRemark').val().trim() },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    if (data.Success) {
+                        $('#GradeId').val('');
+                        $('#GradeRemark').val('');
+                        han.closewaiting();
+                        han.message("Save success");
+                    }
+                    else {
+                        han.closewaiting();
+                        han.message(data.Message);
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+<form class="layui-form" action="">
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">年级ID：</label>
+        <div class="layui-input-block">
+          <input type="text" id="GradeId"  placeholder="格式为:"2015"，不可重复且修改" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+          <textarea id="GradeRemark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+    <div style="text-align:center">
+        <button class="layui-btn layui-btn-radius layui-btn-normal" style="width:300px;" onclick="savegrade()">保存</button>
+    </div>
+</div>
+</body>
+</html>

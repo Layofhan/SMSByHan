@@ -1,0 +1,184 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ElectiveRegistration</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+        $.ajax({
+            url: '/ResourceManagement/GetCourseInfrormation',
+            dataType: 'json',
+            success: function (data) {
+                if (data.Success) {
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#CourseName').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                    }
+                    han.formrender();
+                    $.ajax({
+                        url: '/ResourceManagement/GetProgressInformation',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.Success) {
+                                for (var i = 0; i < data.Data.length; i++) {
+                                    $('#MajorName').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                                }
+                                han.formrender();
+                                $.ajax({
+                                    url: '/ResourceManagement/GetGradeInformation',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if (data.Success) {
+                                            for (var i = 0; i < data.Data.length; i++) {
+                                                $('#Grade').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                                            }
+                                            han.formrender();
+                                        }
+                                        else {
+                                            han.message(data.Message);
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+                                han.message(data.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+        function saveer() {
+            if ($('#SurplusId').val().trim() == '') { han.message("ID can not be empty!"); return; }
+            if ($('#CourseName').val() == '') { han.message("CourseName can not be empty!"); return; }
+            if ($('#MajorName').val() == '') { han.message("MajorName can not be empty!"); return; }
+            if ($('#Grade').val == '') { han.message("Grade can not be empty!"); return; }
+            if ($('#Capacity').val().trim() == '') { han.message("Capacity can not be empty!"); return; }
+            if ($('#Surplus').val().trim() == '') { han.message("Capacity can not be empty!"); return; }
+            var ret = /^[a-zA-Z]{2}[\d]{6}$/;
+            var ret1 = /^[0-9]+$/;
+            if (!ret1.test($('#Capacity').val().trim())) { han.message('Capacity must be numeric'); return; }
+            if ($('#Capacity').val().trim() != $('#Surplus').val().trim()) { han.message('The allowance must be equal to the capacity'); return; }
+            if (!ret.test($('#SurplusId').val().trim())) { han.message('An ID must consist of two letters plus six digits'); return; }
+            $.ajax({
+                url: '/ActivityArrangement/InsertChoiceCourseToTabl',
+                data: {
+                    Id: $('#SurplusId').val().trim(),
+                    CourseId: $('#CourseName').val(),
+                    Capacity: $('#Capacity').val().trim(),
+                    MajorId: $('#MajorName').val(),
+                    GradeId: $('#Grade').val(),
+                    Remark: $('#Remark').val(),
+                    Surplus: $('#Capacity').val().trim(),
+                    Enable: $('#CourseCheck').prop("checked"),
+                    TypeId: $('#reType').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        han.message("Save Success");
+                        $('#SurplusId').val('');
+                        $('#Capacity').val('');
+                        $('#Surplus').val('');
+                        $('#Remark').val('');
+                    }
+                    else {
+                        han.message(data.Message);
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+    <form class="layui-form" action="">
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">选课ID：</label>
+        <div class="layui-input-block">
+          <input type="text" id="SurplusId" placeholder="由两位字母+6位数字组成，不可重复且修改" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程名称：</label>
+        <div class="layui-input-block">
+            <select id="CourseName" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">专业名称：</label>
+        <div class="layui-input-block">
+            <select id="MajorName" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">年级：</label>
+        <div class="layui-input-block">
+            <select id="Grade" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">容量：</label>
+        <div class="layui-input-block">
+          <input type="text" id="Capacity" placeholder="课程人数" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">余量：</label>
+        <div class="layui-input-block">
+          <input type="text" id="Surplus" placeholder="初始与容量相同" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选课类型：</label>
+        <div class="layui-input-block">
+            <select id="reType" lay-verify="" lay-search>
+                <option value="0">全校性选课</option>
+                <option value="1">体育选课</option>
+                <option value="2">重修或补休选报</option>
+                <option value="3">专业选修课</option>
+                <option value="4">专业方向选报</option>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用</label>
+        <div class="layui-input-block">
+          <input id="CourseCheck" type="checkbox" lay-skin="switch" lay-text="开启|关闭" checked>
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+          <textarea id="Remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+    <div style="text-align:center">
+        <a id="savemajor" class="layui-btn layui-btn-radius layui-btn-normal" style="width:300px;" onclick="saveer()">保存</a>
+    </div>
+</div>
+</body>
+</html>

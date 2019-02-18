@@ -1,0 +1,117 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NoticeDetailedInterface</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        $.ajax({
+            url: '/Notification/SearchNoticeDetailed',
+            type: 'post',
+            dataType: 'json',
+            data: { id: '@ViewBag.Message' },
+            success: function (data) {
+                if (data.Success) {
+                    $('#notictitle').append(data.Data.Title);
+                    $('#noticetime').append(data.Data.PublishDate);
+                    $('#noticecontent').append(data.Data.Contents);
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+        function aa() {
+            alert('@ViewBag.Message');
+        }
+    </script>
+    <style type="text/css">
+        .hanui-body-main{
+            z-index:999;
+            padding:10px;
+            height:auto;
+            background-color:white;
+            margin:15px;
+        }
+        .hanui-notice-title{
+            
+            padding:0 15px;
+            height:50px;
+            line-height:50px;
+            color:#333;
+            font-size:14px;
+        }
+        .hanui-notice-time{
+            height:30px;
+            padding:0 15px;
+            line-height:30px;
+            color:gray;
+            font-size:7px;
+            border-bottom:1px solid #f6f6f6;
+        }
+        .hanui-notice-content{
+            color:rgb(102,102,102);
+            height:auto;
+            line-height:24px;
+            font-size:15px;
+            padding:0 15px;
+            margin-top:5px;
+        }
+        .hanui-notice-button{
+            margin-left:15px;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hanui-body-main"> 
+        <div class="hanui-notice-title">
+            <h1 id="notictitle"></h1>
+        </div>
+        <div class="hanui-notice-time">
+            <p>
+                <span id="noticesender" style="display:none">Alone But Not Lonely Han 1997-10-31 05:20</span>
+                <span id="noticetime"></span>
+            </p>
+        </div>
+        <div>
+            <div class="hanui-notice-content">
+                <p id="noticecontent"></p>
+            </div>
+        </div>
+
+        <div>
+            <a class="layui-btn layui-btn-primary hanui-notice-button" href="javascript:history.go(-1)">返回上级</a>
+        </div>
+    </div>
+<!--<div style="padding: 15px;">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            标题样式测试
+            <p>
+                <span>发布者</span>
+                <span>2018-10-22 17:36</span>
+            </p>         
+                
+        </div>
+        <div class="layui-card-body">
+            <div>
+                <p>消息主题内容</p>
+            </div>
+            <div>
+                <a class="layui-btn layui-btn-primary" href="javascript:history.go(-1)">返回上级</a>
+            </div>
+        </div>
+    </div>
+</div>-->
+</body>
+</html>

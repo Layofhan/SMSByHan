@@ -1,0 +1,201 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ArrangeCurriculum</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });     
+        han.date({
+            elem: '#OpenClassTime',
+            type: 'date',
+            range:false
+        });
+        han.date({
+            elem: '#ExamTime',
+            type: 'datetime',
+            range: false
+        });
+        //请求课程信息
+        $.ajax({
+            url: '/ResourceManagement/GetCourseInfrormation',
+            dataType: 'json',
+            success: function (data) {
+                if (data.Success) {
+                    if (data.Data.length == 0) {
+                        han.message("No branch information!Please first maintain and proceed with this operation.");
+                    }
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#CurriculumName').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                    }
+                    han.formrender();
+                    $.ajax({
+                        url: '/ResourceManagement/GetTeacherInformation',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.Success) {
+                                if (data.Data.length == 0) {
+                                    han.message("No branch information!Please first maintain and proceed with this operation.");
+                                }
+                                for (var i = 0; i < data.Data.length; i++) {
+                                    $('#TeacherName').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                                }
+                                han.formrender();
+                            }
+                            else {
+                                han.message(data.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+        //请求教师信息
+
+        function savecutticulum() {
+            if ($('#CurriculumName').val() == null) { han.message("CurriculumName can not be empty!"); return; }
+            if ($('#TeacherName').val() == null) { han.message("TeacherName can not be empty!"); return; }
+            if ($('#LearnTime').val() == null) { han.message("LearnTime can not be empty!"); return; }
+            if ($('#StartEndTime').val() == null) { han.message("StartEndTime can not be empty!"); return; }
+            if ($('#Campus').val().trim() == null) { han.message("Campus can not be empty!"); return; }
+            if ($('#OpenClassTime').val() == null) { han.message("OpenClassTime can not be empty!"); return; }
+            if ($('#Location').val().trim() == null) { han.message("Location can not be empty!"); return; }
+            if ($('#BookName').val().trim() == null) { han.message("BookName can not be empty!"); return; }
+            if ($('#ExamTime').val() == null) { han.message("ExamTime can not be empty!"); return; }
+
+            $.ajax({
+                url: '/ResourceManagement/InsertCurriculumToTable',
+                data: {
+                    courseId: $('#CurriculumName').val(),
+                    teacherId: $('#TeacherName').val(),
+                    enable: $('#ArrangeCheck').val(),
+                    remark: $('#CurriculumRemark').val(),
+                    learntime:$('#LearnTime').val(), 
+                    startendtime:$('#StartEndTime').val(), 
+                    campus:$('#Campus').val().trim(), 
+                    openclasstime:$('#OpenClassTime').val(), 
+                    location:$('#Location').val().trim(), 
+                    books:$('#BookName').val().trim(), 
+                    examtime: $('#ExamTime').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        han.message("Save Success");
+                        $('#CurriculumName').val('');
+                        $('#TeacherName').val('');
+                        $('#ArrangeCheck').val('');
+                        $('#CurriculumRemark').val('');
+                        $('#LearnTime').val('');
+                        $('#StartEndTime').val('');
+                        $('#Campus').val('');
+                        $('#OpenClassTime').val('');
+                        $('#Location').val('');
+                        $('#BookName').val('');
+                        $('#ExamTime').val('');
+                    }
+                    else
+                        han.message(data.Message);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程名称：</label>
+        <div class="layui-input-block">
+            <select id="CurriculumName" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">老师名称：</label>
+        <div class="layui-input-block">
+            <select id="TeacherName" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用</label>
+        <div class="layui-input-block">
+          <input id="ArrangeCheck" type="checkbox" lay-skin="switch" lay-text="开启|关闭" checked>
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">周学时：</label>
+        <div class="layui-input-block">
+          <input type="text" id="LearnTime" placeholder="请输入周学时" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">起始时间：</label>
+        <div class="layui-input-block">
+          <input type="text" id="StartEndTime" placeholder="请输入起始时间" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">校区：</label>
+        <div class="layui-input-block">
+          <input type="text" id="Campus" placeholder="请输入校区" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">开课时间：</label>
+        <div class="layui-input-block">
+          <input type="text" id="OpenClassTime" placeholder="请输入开课时间" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">地点：</label>
+        <div class="layui-input-block">
+          <input type="text" id="Location" placeholder="请输入上课地点" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">教材信息：</label>
+        <div class="layui-input-block">
+          <input type="text" id="BookName" placeholder="请输入教材信息" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">考试时间：</label>
+        <div class="layui-input-block">
+          <input type="text" id="ExamTime" placeholder="请输入考试时间" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+          <textarea id="CurriculumRemark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+    <div style="text-align:center">
+        <button id="savemajor" class="layui-btn layui-btn-radius layui-btn-normal" style="width:300px;" onclick="savecutticulum()">保存</button>
+    </div>
+    <br /><br />
+</div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>StudentTimetable</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css" />
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+</head>
+<body style="height:100%">
+    <div style="z-index:999;padding:10px;background-color:white;margin:15px;height:795px;">
+        <table style="height:88%;width:1000px;text-align:center;table-layout:fixed;font-family:'楷体';font-size:17px;color:gray;float:left;">
+            <tr>
+                <td>&nbsp</td>
+                <td>周一</td>
+                <td>周二</td>
+                <td>周三</td>
+                <td>周四</td>
+                <td>周五</td>
+                <td>周六</td>
+                <td>周日</td>
+            </tr>
+            <tr>
+                <td>第一节</td>
+                <td rowspan="10" id="Monday"></td>
+                <td rowspan="10" id="Tuesday"></td>
+                <td rowspan="10" id="Wednesday"></td>
+                <td rowspan="10" id="Thursday"></td>
+                <td rowspan="10" id="Friday"></td>
+                <td rowspan="10" id="Saturday"></td>
+                <td rowspan="10" id="Sunday"></td>
+            </tr>
+            <tr>
+                <td>第二节</td>
+            </tr>
+            <tr>
+                <td>第三节</td>
+            </tr>
+            <tr>
+                <td>第四节</td>
+            </tr>
+            <tr>
+                <td>第五节</td>
+            </tr>
+            <tr>
+                <td>第六节</td>
+            </tr>
+            <tr>
+                <td>第七节</td>
+            </tr>
+            <tr>
+                <td>第八节</td>
+            </tr>
+            <tr>
+                <td>晚自习</td>
+            </tr>
+            <tr>
+                <td>晚自习</td>
+            </tr>
+        </table>
+        <!--<div style="float:right;height:100%;width:100px;background-color:red;">
+
+        </div>-->
+    </div>
+</body>
+<script>
+    $(function () {
+        //添加模板
+        var arr = [1, 2, 3];
+        $.ajax({
+            url: '/Information/GetTimetable',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data.Data[0]);
+                //周一
+                han.tpl({
+                    data: {
+                        list: data.Data[0]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Monday'
+                });
+                //周二
+                han.tpl({
+                    data: {
+                        list: data.Data[1]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Tuesday'
+                });
+                //周三
+                han.tpl({
+                    data: {
+                        list: data.Data[2]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Wednesday'
+                });
+                //周四
+                han.tpl({
+                    data: {
+                        list: data.Data[3]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Thursday'
+                });
+                //周五
+                han.tpl({
+                    data: {
+                        list: data.Data[4]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Friday'
+                });
+                //周六
+                han.tpl({
+                    data: {
+                        list: data.Data[5]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Saturday'
+                });
+                //周日
+                han.tpl({
+                    data: {
+                        list: data.Data[6]
+                    },
+                    view: $('#LAY-blog-sel').html(),
+                    id: '#Sunday'
+                });
+            }
+        });
+    });
+</script>
+
+<script id="LAY-blog-sel" type="text/html">
+    <div style="height:100%;width:90%;">
+        {{# var coursenums = d.list.Courses.length; var state = true;var state2 = false; }}
+        <table style="height:100%;width:100%;table-layout:fixed;">
+            {{# for(var j=1;j<=10;j++){state = true;state2 = false;  for(var i=0;i<coursenums;i++){ if(d.list.Courses[i].StartTime==j){d.list.Courses[i].State=true; }}
+            <tr style="height:{{ d.list.Courses[i].Nums*70 }}px">
+                <td rowspan={{ d.list.Courses[i].Nums }}>
+                    <div onclick="CourseClick({{ d.list.Courses[i].CourseId }})" style="width:100%;height:100%;word-wrap:break-word;word-break:break-all;font-size:10px;font-family:'楷体';line-height:20px;border-radius:10px;border:2px solid white;color:gray;cursor:pointer;background-color:{{ d.list.Courses[i].Color }}" >{{ d.list.Courses[i].Name}}</div>
+                </td>
+            </tr>
+            {{# for(var k=0;k<d.list.Courses[i].Nums-1;k++){ j++; }}
+            <tr style="height:0px;"></tr>
+            {{# }break;}else{  for(var l=0;l<coursenums;l++){if(!d.list.Courses[l].State){ state2 =true;break; } } if(state2 && d.list.Courses[i].State){continue;}  if(state){ state = false;}}
+            <tr style="height:70px;"><td></td></tr>
+            {{# } } } } }}
+        </table>
+    </div>
+</script>
+    <script>
+        function CourseClick(id) {
+            alert(id);
+        }
+    </script>
+</html>

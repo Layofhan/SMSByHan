@@ -1,0 +1,96 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+    <title>DataTest</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+        <div style="z-index:999;padding:10px;background-color:white;margin:15px;">
+            <button class="layui-btn layui-btn-primary" onclick="View()">查看</button><!--style="width:100px;margin-left:70px;margin-top:5px;"-->
+            <button class="layui-btn layui-btn-primary" onclick="Edit()">编辑</button>
+            <button class="layui-btn layui-btn-primary" onclick="AllRead()">全部已读</button>
+        </div>
+     <div>
+       <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+          <legend>拖拽上传</legend>
+        </fieldset> 
+    </div>
+    <div class="layui-upload-drag" id="test10">
+      <i class="layui-icon"></i>
+      <p>点击上传，或将文件拖拽到此处</p>
+    </div>
+<!--    <button type="button" class="layui-btn" id="test10">
+      <i class="layui-icon">&#xe67c;</i>上传图片
+    </button>-->
+  <div class="layui-form-item">
+    <label class="layui-form-label">文件名</label>
+    <div class="layui-input-block">
+      <input type="text" id="filename" required  lay-verify="required" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+</body>
+    <script>
+        //在线预览word
+        function View() {
+            $.ajax({
+                url: '/DataTest/OnlineWordBrowsing',
+                data:{filenames:$('#filename').val()},
+                dataType: 'json',
+                beforeSend:function(){
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    var index = layui.use('layer', function () {
+                                    layer.open({
+                                        type: 2,
+                                        title: 'Word 预览界面',
+                                        shadeClose: true,
+                                        shade: 0.4,
+                                        maxmin: true, //开启最大化最小化按钮
+                                        area: ['70%', '100%'],
+                                        content: data //iframe的url
+                                    });
+                                 });
+                }
+            });
+        }
+        
+        function Edit() {
+            var url = "http://localhost:21742/SMS/SMS/StaticPage/数据库设计.html";
+            //url = encodeURIComponent(url);
+            location.href = url;
+        }
+        layui.use('upload', function () {
+            var upload = layui.upload;
+            //拖拽上传
+            upload.render({
+                elem: '#test10'
+              , url: '/DataTest/Upload'
+              , accept: 'file'
+              , multiple:true
+              , number:2
+              , done: function (res) {
+                  console.log(res)
+              },
+              choose: function (obj) {
+                  obj.preview(function (index, file, result) {
+                      $('#filename').val('');
+                      $('#filename').val(file.name);
+                      console.log(file.name);
+                  })
+              }
+            });
+        });
+        </script>
+</html>

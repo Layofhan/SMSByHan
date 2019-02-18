@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B9C9B092-45A0-475B-A572-B931C7BB0564}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SMS.Demo</RootNamespace>
+    <AssemblyName>SMS.Demo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Word\14.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ChildMenuMessage.cs" />
+    <Compile Include="Common\IdentityManager.cs" />
+    <Compile Include="Common\IdentityTicket.cs" />
+    <Compile Include="Common\MenuMessage.cs" />
+    <Compile Include="Common\OnlineWordBrowse.cs" />
+    <Compile Include="Common\RandomNumber.cs" />
+    <Compile Include="Contracts\IActivityArrangementContract.cs" />
+    <Compile Include="Contracts\IBaseInformationManageContract.cs" />
+    <Compile Include="Contracts\IEvaluationStatisticsContract.cs" />
+    <Compile Include="Contracts\IHomeContract.cs" />
+    <Compile Include="Contracts\IInformationContract.cs" />
+    <Compile Include="Contracts\IInformationMaintainContract.cs" />
+    <Compile Include="Contracts\IJobinfoAndManageContract.cs" />
+    <Compile Include="Contracts\ILoginContract.cs" />
+    <Compile Include="Contracts\IMenuContract.cs" />
+    <Compile Include="Contracts\IMessageNotificationContract.cs" />
+    <Compile Include="Contracts\IOnlineCourseSelectionContract.cs" />
+    <Compile Include="Contracts\IPerformanceManagementContract.cs" />
+    <Compile Include="Contracts\ITestContract.cs" />
+    <Compile Include="Contracts\IResourceManagementContract.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ActivityArrangementService.cs" />
+    <Compile Include="Services\BaseInformationManageService.cs" />
+    <Compile Include="Services\EvaluationStatisticsService.cs" />
+    <Compile Include="Services\HomeService.cs" />
+    <Compile Include="Services\InformationMaintainService.cs" />
+    <Compile Include="Services\InformationService.cs" />
+    <Compile Include="Services\JobinfoAndManageService.cs" />
+    <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\MenuService.cs" />
+    <Compile Include="Services\MessageNotificationService.cs" />
+    <Compile Include="Services\OnlineCourseSelectionService.cs" />
+    <Compile Include="Services\PerformanceManagementService.cs" />
+    <Compile Include="Services\ResourceManagementService.cs" />
+    <Compile Include="Services\TestService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMS.Data\SMS.Data.csproj">
+      <Project>{BDF0C382-FAEC-4E2B-B510-9EF3B35232AD}</Project>
+      <Name>SMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SMS.Entity\SMS.Entity.csproj">
+      <Project>{CDA50557-1D40-4E53-940B-07A6382B2BA9}</Project>
+      <Name>SMS.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>5</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

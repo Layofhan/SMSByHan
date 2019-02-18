@@ -1,0 +1,259 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>WorkAssignment</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/han.common.js"></script>
+    <style type="text/css">
+        .layui-btn{
+            height:28px;
+            line-height:30px;
+        }
+    </style>
+</head>
+<body>
+    <div style="z-index:999;padding:10px;background-color:white;margin:15px;height:650px">
+        <div class="layui-tab layui-tab-brief">
+              <ul class="layui-tab-title">
+                <li class="layui-this">作业批改</li>
+                <li>作业情况</li>
+              </ul>
+              <div class="layui-tab-content" style="height: 100px;">
+                <div class="layui-tab-item layui-show">
+                    
+                    <div style="width:100%;height:50px;line-height:50px;">
+                        <form class="layui-form" action="" style="width:400px">
+                            <div style="width:200px;float:left;height:50px">
+                                <div class="layui-form-item" style="margin-left:-50px"> 
+                             <label class="layui-form-label">课程：</label>
+                             <div class="layui-input-block" style="width:200px;">
+                                    <select id="Course" lay-verify="required" lay-filter="course" lay-search>
+                                        <option value="">请选择一门课程</option>
+                                    </select>     
+                              </div>
+                            </div>
+                            </div>
+                            <div style="width:200px;height:50px;float:right;">
+                                <div class="layui-form-item" style="margin-left:50px"> 
+                            <label class="layui-form-label">班级：</label>
+                             <div class="layui-input-block" style="width:200px">
+                                 <select id="Class" lay-verify="required" lay-filter="class" lay-search>
+                                     
+                                 </select>     
+                              </div>
+                            </div>
+                            </div>    
+                        </form>
+                    </div>
+                    <div>
+                            <table id="Table_WorkCheck" lay-filter="test"></table>
+                        </div>
+                    </div>
+                <div class="layui-tab-item">
+                    hello two
+                    <!--<table id="Table_HadWork" lay-filter="test2" ></table>-->
+                </div>
+              </div>
+        </div> 
+    </div>
+</body>
+<script>
+    
+    layui.use('form', function () {
+        var form = layui.form;
+        form.render();
+    });
+    
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    $(function () {
+        
+        var cour;
+        var cla;
+        
+        //data: [
+        //    { Name: '许某人', StudentId: '15219111126', WorkId: '1031', FileName: '15219111126 许高涵 综合实验报告1.docx', CheckTime: '2018-11-14 10:39', Grade: '86', State: 0 },
+        //    { Name: '许某人', StudentId: '15219111126', WorkId: '1031', FileName: '15219111126 许高涵 综合实验报告2.docx', CheckTime: '2018-11-14 10:39', Grade: '86', State: 0 },
+        //    { Name: '许某人', StudentId: '15219111126', WorkId: '1031', FileName: '15219111126 许高涵 综合实验报告3.docx', CheckTime: '2018-11-14 10:39', Grade: '86', State: 0 }
+        //],
+    
+    //监听表格事件事件
+    layui.use('table', function () {
+        var table = layui.table;
+        //监听行按钮事件
+        table.on('tool(test)', function (obj) {
+            if (obj.event === 'choice') {
+                //获取当前行的学生ID和作业ID
+                //console.log(obj.data);
+                var stuid = obj.data.StudentId;
+                var workid = obj.data.WorkId;
+                
+                //触发在线预览word事件
+                $.ajax({
+                    url: '/JobMaintain/OnlineWordBrowsing',
+                    data: { workId: obj.data.WorkId },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        han.waiting();
+                    },
+                    success: function (data) {
+                        //console.log(data);
+                        han.closewaiting();
+                        var index = layui.use('layer', function () {
+                            layer.open({
+                                type: 2,
+                                title:obj.data.StudentName+ '的作业,文件名为:'+obj.data.FileName,
+                                shadeClose: true,
+                                shade: 0.4,
+                                maxmin: true, //开启最大化最小化按钮
+                                area: ['70%', '100%'],
+                                content: data.Message //iframe的url
+                            });
+                        });
+                    }
+                });
+            }
+        });
+        //监听行编辑事件
+        table.on('edit(test)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+            //console.log(obj.value); //得到修改后的值
+            //console.log(obj.field); //当前编辑的字段名
+            //console.log(obj.data); //所在行的所有相关数据  
+
+            //提交行修改--修改成绩
+            $.ajax({
+                url: '/JobManagement/UpdateWorkScore',
+                data: {
+                    StudentId: obj.data.StudentId,
+                    WorkId: obj.data.WorkId,
+                    CourseId: obj.data.CourseId,
+                    Score:obj.value
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (!data.Success) {
+                        han.message("Failed to modify the score, refresh after retry");
+                    }
+                    else {
+                        han.reloadtable('#Table_WorkChecks');
+                    }
+                }
+            });
+        });
+    });
+    //监听下拉框的选择
+    layui.use('form', function () {
+        var form = layui.form;
+        //课程下拉框
+        form.on('select(course)', function (data) {
+            cour = data.value;
+            if (data.value != null) {
+                $.ajax({
+                    url: '/JobManagement/GetClassInformation',
+                    data: { CourseId: data.value},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Success) {
+                            if (data.Data == null) {
+                                han.message("No Data!");
+                                return;
+                            }
+                            $('#Class').empty();
+                            $('#Class').append("<option value=''>请选择班级</option>");
+                            for (var i = 0; i < data.Data.length; i++) {
+                                $('#Class').append("<option value='" + data.Data[i].Class + "'>" + data.Data[i].Class + "</option>");
+                            }
+                            han.formrender();
+                        }
+                        else {
+                            han.message(data.Message);
+                        }
+                    }
+                });
+            }
+        });  
+        //班级下拉框
+        form.on('select(class)', function (data) {
+            cla = data.value;
+            if (data.value != null) {
+                LoadTabel();
+            }
+        });
+        });
+
+        function LoadTabel() {
+            han.table({
+                url: '/JobManagement/GetWorkForTeachCheck?CouserId=' + cour + '&&ClassId=' + cla,
+                elem: '#Table_WorkCheck',
+                counts: 1,
+                page: {
+                    layout: ['prev', 'page', 'next', 'count'] //自定义分页布局
+                    , groups: 10
+                    , first: false //不显示首页
+                    , last: false //不显示尾页
+                    , count: 1
+                },
+                cols: [[
+                    { field: 'StudentName', title: '学生姓名', width: '20%' }
+                    , { field: 'StudentId', title: '学生ID', hide: true }
+                    , { field: 'WorkId', title: '文件ID', hide: true }
+                    , {
+                        field: 'FileName', title: '文件名称', templet: function (d) {
+                            return d.FileName.substring(0, d.FileName.lastIndexOf('_'));
+                        }, width: '25%'
+                    }
+                    , { field: 'CheckTime', title: '批改时间', width: '20%' }
+                    , { field: 'Score', title: '成绩', width: '15%', edit: 'text' }
+                    , {
+                        field: 'State', title: '状态', width: '10%', templet: function (d) {
+                            if (d.State == 1) return "<span style='color:red'>未批改</span>"
+                            //if (d.State == 1) return "<span style='color:black'>已浏览</span>"
+                            if (d.State == 2) return "<span style='color:green'>已批改</span>"
+                        }
+                    }
+                    , { field: '', title: '预览', toolbar: '#barDemo', unresize: true, width: '10%', align: 'center', fixed: 'right' }
+                ]]
+            });
+        }
+    });
+</script>
+<script>
+    $(function () {
+        //添加课程和班级内容
+        $.ajax({
+            url: '/JobManagement/GetCourseInformation',
+            dataType: 'json',
+            success: function (data) {
+                if (data.Success) {
+                    if (data.Data == null) {
+                        han.message("No Data!");
+                        return;
+                    }
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#Course').append("<option value='" + data.Data[i].CourseId + "'>" + data.Data[i].CourseName + "</option>");
+                    }
+                    han.formrender();
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+    });
+</script>
+<script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-radius" lay-event="choice">在线预览</a>
+    </script>
+</html>

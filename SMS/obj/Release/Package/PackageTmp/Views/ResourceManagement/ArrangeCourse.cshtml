@@ -1,0 +1,132 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ArrangeCourse</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+        });
+        $.ajax({
+            url: '/ResourceManagement/GetProgressInformation',
+            dataType: 'json',
+            success: function (data) {
+                if (data.Data == null) {
+                        han.message("No progress information!Please first maintain and proceed with this operation.");
+                }
+                else if (data.Success) {
+                    for (var i = 0; i < data.Data.length; i++) {
+                        $('#ProgressName').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                    }
+                    han.formrender();
+                    $.ajax({
+                        url: '/ResourceManagement/GetCourseInfrormation',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.Data == null) {
+                                han.message("No course information!Please first maintain and proceed with this operation.");
+                            }
+                            else if (data.Success) {
+                                for (var i = 0; i < data.Data.length; i++) {
+                                    $('#CourseName').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                                }
+                                han.formrender();
+                                $.ajax({
+                                    url: '/ResourceManagement/GetGradeInformation',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if (data.Data == null) {
+                                            han.message("No grade information!Please first maintain and proceed with this operation.");
+                                        }
+                                        else if (data.Success) {
+                                            for (var i = 0; i < data.Data.length; i++) {
+                                                $('#Grade').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                                            }
+                                            han.formrender();
+                                        }
+                                        else {
+                                            han.message(data.Message);
+                                        }
+                                    }
+                                });
+                            }
+                            else {
+                                han.message(data.Message);
+                            }
+                        }
+                    });
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+        function saveArrangeCourse() {
+            $.ajax({
+                url: '/ResourceManagement/InsertStudentCourseToTable',
+                data: { progressid: $('#ProgressName').val(), courseid: $('#CourseName').val(), gradeid: $('#Grade').val(), remark: $('#CourseRemark').val() },
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    han.closewaiting();
+                    if (data.Success) {
+                        $('#CourseRemark').val('');
+                        han.message("Save Success");
+                    }
+                    else
+                        han.message(data.Message);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">专业名称：</label>
+        <div class="layui-input-block">
+            <select id="ProgressName" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程名称：</label>
+        <div class="layui-input-block">
+            <select id="CourseName" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">年级：</label>
+        <div class="layui-input-block">
+            <select id="Grade" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+        <div class="layui-form-item"> 
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+          <textarea id="CourseRemark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+<div style="text-align:center">
+        <button class="layui-btn layui-btn-radius  layui-btn-normal" style="width:300px;" onclick="saveArrangeCourse()">保存</button>
+    </div>
+</div>
+</body>
+</html>

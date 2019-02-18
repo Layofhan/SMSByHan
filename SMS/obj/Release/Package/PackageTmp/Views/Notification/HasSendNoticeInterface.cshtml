@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HasSendNoticeInterface</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        //alert('@ViewBag.id');
+            $.ajax({
+            type: "post",
+            url: "/Notification/HasSendNotices",//http://localhost:21742           
+            dataType: 'json',
+            success: function (result) {
+                if (result.Success) {
+                    var count = result.Data.length;
+                    if (count > 0) {
+                        han.table({
+                            counts: count,
+                            id: 'NoticeId',
+                            url: '/Notification/HasSendNotices',
+                            elem: '#Han_Table',
+                            page: {
+                                layout: ['prev', 'page', 'next', 'count'] //自定义分页布局
+                              , groups: 10
+                              , first: false //不显示首页
+                              , last: false //不显示尾页
+                              , count: count
+                            },
+                            limit: 10,
+                            cols: [[
+                             {
+                                 field: 'Title', title: '文章标题',style:'border-right:none;width:80%;',
+                                  templet: function (d) {
+                                      return "<a href='/Notification/HasSendNoticeDetailedInterface?id=" + d.NoticeId + "'>" + d.Title + "</a>"
+                                  }
+                              }
+                            , { field: 'PublishDate', title: '时间', style: 'border-right:none;width:10%;' }
+                            ]]
+                        });
+
+                    }
+                    else {
+                        han.message("No Data");
+                    }
+                }
+                else {
+                    han.message(result.Message);
+                }
+            }
+        });
+        
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+    <div> 
+        <table id="Han_Table"></table>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexView</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>-->
+    <script>
+        $.ajax({
+                type: "post",
+                url: "/Notification/SearchNotice",//http://localhost:21742           
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (result) {
+                    han.closewaiting();
+                    if (result.Success) {
+                        var count = result.Data.length;
+                        if (count > 0) {
+                            han.table({
+                                counts:count,
+                                id: 'NoticeId',
+                                url: '/Notification/SearchNotice',
+                                elem: '#Han_Table',
+                                page:{
+                                    layout: ['prev', 'page', 'next', 'count'] //自定义分页布局
+                                  , groups: 10
+                                  , first: false //不显示首页
+                                  , last: false //不显示尾页
+                                  ,count:count
+                                },
+                                limit: 10,
+                                cols: [[
+                                    { type: 'checkbox' }
+                                  , { field: 'Title', title: '标题内容',  style: 'border-right:none;width: 48%' }
+                                  , { field: 'PublisherName', title: '发送者',  style: 'border-right:none;width: 24%' }
+                                  , { field: 'PublishDate', title: '时间',  style: 'border-right:none;width: 24%' }
+                                ]],
+                            });
+                        }
+                        else {
+                            han.message("No Data");
+                        }
+                    }
+                    else {
+                        han.message(result.Message);
+                    }
+                }
+            }); 
+        function DeleteNotice() {
+                layui.use('table', function () {
+                    var table = layui.table;
+                    var checkStatus = table.checkStatus('Han_Table');
+                    if (checkStatus.data.length == 0) {
+                        han.message('Please select the row to delete !');
+                    }
+                    else {
+                        var set = [];
+                        for (var i = 0 ; i < checkStatus.data.length; i++) {
+                                set.push(checkStatus.data[i].NoticeId);
+                        }
+                            $.ajax({
+                                type: "post",
+                                url: "/Notification/DeleteNotice",
+                                dataType: 'json',
+                                data: { list: set },
+                                success: function (data) {
+                                    if (data.Success) {
+                                        table.reload('Han_Table');
+                                    }
+                                    han.message(data.Message);
+                                }
+                            });
+                    }
+                })
+            }
+        function MarkupHasBeenRead() {
+                    layui.use('table', function () {
+                        var table = layui.table;
+                        var checkStatus = table.checkStatus('Han_Table');
+                        if (checkStatus.data.length == 0) {
+                            han.message('Please choose to mark the rows you read !');
+                        }
+                        else {
+                            var set = [];
+                            for (var i = 0 ; i < checkStatus.data.length; i++) {
+                                if (checkStatus.data[i].Marker == 0) {
+                                    set.push(checkStatus.data[i].NoticeId);
+                                }
+                            }
+                            if (set.length != 0) {
+                                $.ajax({
+                                    type: "post",
+                                    url: "/Notification/SetNoticeHasRead",
+                                    dataType: 'json',
+                                    data: { list: set },
+                                    success: function (data) {
+                                        if (data.Success) {
+                                            table.reload('Han_Table');
+                                        }
+                                        han.message(data.Message);
+                                    }
+                                });
+                            }
+                            else {
+                                han.message("No unread messages!");
+                            }
+                        }
+                    })
+                };
+        function AllRead() {
+                
+            //layui.use('table', function () {
+            //    var table = layui.table;
+            //    var checkStatus = table.checkStatus('Han_Table');
+            //    for (var i = 0; i < checkStatus.data.length; i++) {
+            //        console.log(checkStatus.data[i]) //获取选中行的数据
+            //    }
+
+            //    console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
+            //    console.log(checkStatus.isAll) //表格是否全选
+            //})
+            //layui.use('table', function () {
+            //    var table = layui.table;
+            //    table.reload('Han_Table');
+            //});
+            $.ajax({
+                type: 'post',
+                url: '/Notification/SetAllNoticeHasRead',
+                dataType: 'json',
+                success: function (data) {
+                    if(data.Success){
+                        layui.use('table', function () {
+                            var table = layui.table;
+                            table.reload('Han_Table');
+                        });
+                    }
+                    han.message(data.Message);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+    <div>
+        <button class="layui-btn layui-btn-primary" onclick="DeleteNotice()">删除</button><!--style="width:100px;margin-left:70px;margin-top:5px;"-->
+        <button class="layui-btn layui-btn-primary" onclick="MarkupHasBeenRead()">标记已读</button>
+        <button class="layui-btn layui-btn-primary" onclick="AllRead()">全部已读</button>
+    </div>
+   
+    <div> 
+        <table id="Han_Table" lay-filter="test" ></table>
+    </div>
+</div>
+</body>
+</html>

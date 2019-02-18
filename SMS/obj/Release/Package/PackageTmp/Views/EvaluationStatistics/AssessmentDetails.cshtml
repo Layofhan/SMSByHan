@@ -1,0 +1,130 @@
+﻿
+@{
+    Layout = null;
+}
+
+<script>
+    var rat1, rat2, rat3, rat4;
+    layui.use('rate', function () {
+        var rate = layui.rate;
+        rate.render({
+          elem: '#HanRate1'
+        , value: 0
+        , text: true
+        , setText: function (value) { //自定义文本的回调
+            var arrs = {
+                '1': '极差'
+              , '2': '差'
+              , '3': '中等'
+              , '4': '好'
+              , '5': '极好'
+            };
+            this.span.text(arrs[value] || ("求5星"));
+        }
+        , choose: function(value){
+            rat1 = value;;
+        }
+        });
+    });
+    layui.use('rate', function () {
+        var rate = layui.rate;
+        rate.render({
+            elem: '#HanRate2'
+        , value: 0
+        , text: true
+        , setText: function (value) { //自定义文本的回调
+            var arrs = {
+                '1': '极差'
+              , '2': '差'
+              , '3': '中等'
+              , '4': '好'
+              , '5': '极好'
+            };
+            this.span.text(arrs[value] || ("求5星"));
+        }
+        , choose: function (value) {
+            rat2 = value;;
+        }
+        });
+    });
+    layui.use('rate', function () {
+        var rate = layui.rate;
+        rate.render({
+            elem: '#HanRate3'
+        , value: 0
+        , text: true
+        , setText: function (value) { //自定义文本的回调
+            var arrs = {
+                '1': '极差'
+              , '2': '差'
+              , '3': '中等'
+              , '4': '好'
+              , '5': '极好'
+            };
+            this.span.text(arrs[value] || ("求5星"));
+        }
+        , choose: function (value) {
+            rat3 = value;;
+        }
+        });
+    });
+    layui.use('rate', function () {
+        var rate = layui.rate;
+        rate.render({
+            elem: '#HanRate4'
+        , value: 0
+        , text: true
+        , setText: function (value) { //自定义文本的回调
+            var arrs = {
+                '1': '极差'
+              , '2': '差'
+              , '3': '中等'
+              , '4': '好'
+              , '5': '极好'
+            };
+            this.span.text(arrs[value] || ("求5星"));
+        }
+        , choose: function (value) {
+            rat4 = value;;
+        }
+        });
+    });
+    function confirm() {
+        if (rat1 == null || rat2 == null || rat3 == null || rat4 == null) { han.message("Please finish marking"); return; }
+        if (EvaluationIds == null || StudentIds == null || CourseIds == null) { han.message("The ID is empty. Please contact the administrator"); return; }
+        $.ajax({
+            url: '/EvaluationStatistics/InsertStuScoreToTable',
+            data: {
+                EvaluationId: EvaluationIds,
+                StudentId: StudentIds,
+                CourseId: CourseIds,
+                acp1:rat1,
+                acp2:rat2,
+                acp3:rat3,
+                acp4:rat4
+            },
+            dataType: 'json',
+            beforeSend: function () {
+                han.waiting();
+            },
+            success: function (data) {
+                han.closewaiting();
+                if (data.Success) {
+                    han.closewaiting(1);
+                    han.message('Evaluation of success');
+                    han.reloadtable({ id: 'Han_Table' });
+                }
+                else
+                    han.message(data.Message);
+            }
+        });
+    }
+</script>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px;text-align:center">
+    <label class="layui-form-label">作业方面:</label><div id="HanRate1"></div><br/>
+    <label class="layui-form-label">教学方面:</label><div id="HanRate2"></div><br/>
+    <label class="layui-form-label">为人方面:</label><div id="HanRate3"></div><br/>
+    <label class="layui-form-label">幽默程度:</label><div id="HanRate4"></div><br/>
+</div>
+
+

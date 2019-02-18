@@ -1,0 +1,32 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+
+    @Html.Partial("_header")
+
+</head>
+<body>
+    <div id='loading' class="loading">
+        @*<span>正在努力加载中，请稍后。。。</span>*@
+    </div>
+    @RenderBody()
+
+    <script type="text/javascript">
+
+    $.parser.onComplete = function () {
+        $("#loading").hide();
+    }
+    var buttons = $.extend([], $.fn.datebox.defaults.buttons);
+    buttons.splice(1, 0, {
+        text: '清空',
+        handler: function (target) {
+            var $target = $(target);
+            $target.datebox("setValue", "");
+            $target.datebox("hidePanel");
+        }
+    });
+    </script>
+</body>
+</html>

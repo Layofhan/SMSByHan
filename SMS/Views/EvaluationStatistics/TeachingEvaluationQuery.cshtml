@@ -1,0 +1,126 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TeachingEvaluationQuery</title>
+    <script src="../../Scripts/echarts.common.min.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Assets/layui.js"></script>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Scripts/han.core.js" type="text/javascript"></script>
+    <script src="../Scripts/han.common.js"></script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;margin:15px">
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md6">
+         <div class="layui-card">
+              <div class="layui-card-header">评分总体情况</div>
+              <div class="layui-card-body">
+                    <div id="MarkAll" style="width: 600px;height:400px;"></div>
+              </div>
+
+         </div>
+    </div>
+    <div class="layui-col-md6">
+         <div class="layui-card">
+      <div class="layui-card-header">详细情况(点击南丁格尔玫瑰图显示)</div>
+      <div class="layui-card-body">
+            <div id="MarkDetails" style="width: 600px;height:400px;"></div>
+      </div>
+ </div>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    //获取各科总评分
+    $.ajax({
+        url: '/EvaluationStatistics/GetTeachEachMark',
+        dataType: 'json',
+        success: function (data) {
+            if (data.Success) {
+                loadpie(data.Data);
+            }
+            else {
+                han.message(data.Message);
+            }
+        }
+    });
+    //加载柱状图
+    function loadbar(marke,title,value) {
+    var arr=['授课方面','作业方面','人品方面','幽默方面'];
+    var na = '总评分:'+value;
+    var mychart = echarts.init(document.getElementById('MarkDetails'), 'light');
+    var option = {
+        title: {
+            text: title
+        },
+        tooltip: {},
+        legend: {
+            data: [na]
+        },
+        xAxis: {
+            data: arr
+        },
+        yAxis: {},
+        series: [{
+            name: na,
+            type: 'bar',
+            data: marke
+        }]
+    };
+        mychart.setOption(option);
+    }
+    var mychart2 = echarts.init(document.getElementById('MarkAll'), 'light');
+    //加载南丁格尔玫瑰图
+    function loadpie(da) {
+        mychart2.setOption({
+            title: {
+                text: '各门任课总评分'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '70%',
+                    roseType: 'radius',
+                    radius: [20, 110],
+                    data: da
+                }
+            ]
+        });
+        }
+    mychart2.on('click', function (params) {          
+        console.log(params);
+        $.ajax({
+            url: '/EvaluationStatistics/GetMarkByCourseId',
+            data: { courseid: params.data.CouseId },
+            dataType: 'json',
+            beforeSend:function(){
+                han.waiting();
+            },
+            success: function (data) {
+                han.closewaiting();
+                if (data.Success) {
+                    var markarray = new Array()
+                    markarray[0] = data.Data.Asp1;
+                    markarray[1] = data.Data.Asp2;
+                    markarray[2] = data.Data.Asp3;
+                    markarray[3] = data.Data.Asp4;
+                    loadbar(markarray, params.data.name, params.value);
+                }
+                else {
+                    han.message(data.Message);
+                }
+            }
+        });
+        });
+</script>
+</html>

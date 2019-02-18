@@ -1,0 +1,176 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateCourse</title>
+    <link href="../Assets/css/layui.css" rel="stylesheet" type="text/css"/>
+    <script src="../Assets/layui.js"></script>
+    <script src="../Scripts/han.core.js"></script>
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+            layui.use('form', function () {
+                var form = layui.form;
+                form.render();
+            });
+            //添加所属 分院的名称
+            $.ajax({
+                url: '/BaseInformationManage/GetBranchInformation',
+                dataType: 'json',
+                beforeSend: function () {
+                    han.waiting();
+                },
+                success: function (data) {
+                    if (data.Success) {
+                        han.closewaiting();
+                        var html = '';
+                        for (var i = 0; i < data.Data.length; i++) {
+                            html += "<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>";
+                        }
+                        $('#CourseBranch').append(html);
+                        han.formrender();
+                        //获取课程性质信息
+                        $.ajax({
+                            url: '/BaseInformationManage/GetNatureInformation',
+                            dataType: 'json',
+                            beforeSend: function () {
+                                han.waiting();
+                            },
+                            success: function (data) {
+                                if (data.Success) {
+                                    han.closewaiting();
+                                    for (var i = 0; i < data.Data.length; i++) {
+                                        $('#CourseNature').append("<option value='" + data.Data[i].Id + "'>" + data.Data[i].Name + "</option>");
+                                    }
+                                    han.formrender();
+                                }
+                                else {
+                                    han.closewaiting();
+                                    han.message("No branch information!Please first maintain and proceed with this operation.");
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        han.closewaiting();
+                        han.message("No branch information!Please first maintain and proceed with this operation.");
+                    }
+                }
+            });
+           
+            function saveCourse() {
+                if ($('#CourseId').val().trim() == '') { han.message("ID can not be empty!"); return; }
+                if ($('#CourseName').val().trim() == '') { han.message("Name can not be empty!"); return; }
+                if ($('#CourseCredit').val().trim() == '') { han.message("Credit can not be empty!"); return; }
+                if ($('#CourseIndexs').val().trim() == '') { han.message("Indexs can not be empty!"); return; }
+                if (branchid == '') { han.message("Branch can not be empty!"); return; }
+                if (natureid == '') { han.message("Nature can not be empty!"); return; }
+                var ret = /^[a-zA-Z]{2}[\d]{6}$/;
+                if (!ret.test($('#CourseId').val().trim())) { han.message("An ID must consist of two letters plus six digits"); return;}
+                var branchid = $('#CourseBranch').val();
+                var natureid = $('#CourseNature').val();
+                var check = 'True'
+                if (!$('#CourseCheck').prop("checked")) {
+                    check = 'False';
+                }
+                $.ajax({
+                    url: '/ResourceManagement/InsertCourseToTable',
+                    data: {
+                        id: $('#CourseId').val().trim(),
+                        name: $('#CourseName').val().trim(),
+                        natureid: natureid,
+                        branchid: branchid,
+                        enable: check,
+                        credit: $('#CourseCredit').val().trim(),
+                        index: $('#CourseIndexs').val().trim(),
+                        remark: $('#CourseRemark').val()
+                    },
+                    dataType: 'json',
+                    beforeSend: function () {
+                        han.waiting();
+                    },
+                    success: function (data) {
+                        han.closewaiting();
+                        if (data.Success) {
+                            $('#CourseId').val('');
+                            $('#CourseName').val('');
+                            $('#CourseCredit').val('');
+                            $('#CourseIndexs').val('');
+                            han.message("Save Success");
+                        }
+                        else {
+                            han.message(data.Message);
+                        }
+                    }
+                });
+            }
+
+
+    </script>
+</head>
+<body>
+<div style="z-index:999;padding:10px;background-color:white;margin:15px">
+<form class="layui-form" action="">
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">课程代号：</label>
+        <div class="layui-input-block">
+          <input type="text" id="CourseId" required  lay-verify="required" placeholder="由两位字母+六位数字组成，不可重复且修改" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">课程名称：</label>
+        <div class="layui-input-block">
+          <input id="CourseName" placeholder="请输入名称" class="layui-input"></input>
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">课程学分：</label>
+        <div class="layui-input-block">
+          <input id="CourseCredit" placeholder="请输入学分" class="layui-input"></input>
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">课程绩点：</label>
+        <div class="layui-input-block">
+          <input id="CourseIndexs" placeholder="请输入绩点" class="layui-input"></input>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开课学院：</label>
+        <div class="layui-input-block">
+            <select id="CourseBranch" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程性质：</label>
+        <div class="layui-input-block">
+            <select id="CourseNature" lay-verify="" lay-search>
+            </select>     
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否启用</label>
+        <div class="layui-input-block">
+          <input id="CourseCheck" type="checkbox" lay-skin="switch" lay-text="开启|关闭" checked>
+        </div>
+    </div>
+    <div class="layui-form-item"> 
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+          <textarea id="CourseRemark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</form>
+    <div style="text-align:center">
+        <button class="layui-btn layui-btn-radius  layui-btn-normal" style="width:300px;" onclick="saveCourse()">保存</button>
+    </div>
+    <br />
+</div>
+</body>
+</html>
